@@ -1,2 +1,2 @@
 # CMPT391
-#College database system
+#College database system (progect 1)
