@@ -17,4 +17,4 @@ Run the sql files in this order:
 
 ## Troubleshooting
 
-During running those files, there will be a foreign constraint check on some of the files (like Instructor.sql). While I have disabled the constraint check, the constraint name might be different (Example of a constraint name:`FK**Instructo**Dept\_\_\_3E52440B`), so you will have to modify that in the respective file to the constraint name in your database.
+During running those files, there will be a foreign constraint check on some of the files (like Instructor.sql). While I have disabled the constraint check, the constraint name might be different (Example of a constraint name:`FK__Instructo__Dept___3E52440B`), so you will have to modify that in the respective file to the constraint name in your database.
