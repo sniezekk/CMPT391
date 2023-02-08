@@ -68,7 +68,7 @@ create table Section (
 	Semester varchar(6),
 	Year int not null,
 	Capacity int not null,
-	Room_ID varchar(10) not null,
+	Room_ID int not null,
 	Instructor_ID int not null,
 	Time_Slot_ID int not null,
 	Course_ID int not null,

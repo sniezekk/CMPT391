@@ -1,6 +1,6 @@
 use CollegeRegistration
 SET IDENTITY_INSERT Instructor ON
-ALTER TABLE Instructor NOCHECK CONSTRAINT FK__Instructo__Dept___3E52440B;
+ALTER TABLE Instructor NOCHECK CONSTRAINT FK__Instructo__Dept;
 insert into Instructor (
 		Instructor_ID,
 		First_Name,
@@ -12976,4 +12976,4 @@ values (
 		'5'
 	);
 SET IDENTITY_INSERT Instructor OFF;
-ALTER TABLE Instructor CHECK CONSTRAINT FK__Instructo__Dept___3E52440B;
+ALTER TABLE Instructor CHECK CONSTRAINT FK__Instructo__Dept;

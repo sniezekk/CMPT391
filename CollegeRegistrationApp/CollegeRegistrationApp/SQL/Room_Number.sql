@@ -1,3 +1,5 @@
+SET IDENTITY_INSERT Room_Number ON
+
 insert into Room_Number (Room_ID, Capacity) values (1, 70);
 insert into Room_Number (Room_ID, Capacity) values (2, 40);
 insert into Room_Number (Room_ID, Capacity) values (3, 50);
@@ -298,3 +300,5 @@ insert into Room_Number (Room_ID, Capacity) values (297, 60);
 insert into Room_Number (Room_ID, Capacity) values (298, 90);
 insert into Room_Number (Room_ID, Capacity) values (299, 80);
 insert into Room_Number (Room_ID, Capacity) values (300, 80);
+
+SET IDENTITY_INSERT Room_Number OFF
