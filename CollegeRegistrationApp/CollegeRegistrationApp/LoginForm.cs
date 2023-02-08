@@ -21,12 +21,12 @@ namespace CollegeRegistrationApp
         {
 
         }
-
+        readonly String connectionString = "Server = localhost; Database = CollegeRegistration; Trusted_Connection = yes;";
         private void loginButton_Click(object sender, EventArgs e)
 
         {
-            // Change the connstring to ur own sql data source
-            SqlConnection connstring = new SqlConnection("Data Source=DESKTOP-LCTRQ00;Initial Catalog=CollegeRegistration;Integrated Security=True");
+           
+            SqlConnection connstring = new SqlConnection(connectionString);
             string query = "Select * from Student Where Student_ID = '" + accountTextInput.Text + "'";
             
 
