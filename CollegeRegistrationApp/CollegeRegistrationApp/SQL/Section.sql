@@ -119,7 +119,6 @@ INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Cours
 INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (117,'Spring',2024,70,8,41,50,88);
 INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (118,'Spring',2022,50,14,65,61,172);
 INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (119,'Summer',2022,120,3,23,87,160);
-
 INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (121,'Fall',2022,100,16,21,13,87);
 INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (122,'Fall',2023,80,16,49,53,51);
 INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (123,'Spring',2022,80,4,91,97,165);
