@@ -110,15 +110,6 @@
             this.toolStripButton5.Size = new System.Drawing.Size(92, 22);
             this.toolStripButton5.Text = "Room";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(501, 323);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(228, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "This is the mian page wiht links on the left";
-            // 
             // AdminMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
