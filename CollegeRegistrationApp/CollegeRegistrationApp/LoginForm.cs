@@ -43,11 +43,14 @@ namespace CollegeRegistrationApp
             }
             else
             {
+                
                 string student_ID = accountTextInput.Text;
-                string query = $"select * from Student where Student_ID = {student_ID}";
+               
+                string query = $"select Student_ID from Student where Student_ID = {student_ID}";
                 SqlDataReader? custdata = connection.GetDataReader(query);
                 if(custdata != null && custdata.HasRows) 
                 {
+                    
                     custdata.Read();
                     string ID = custdata["Student_ID"].ToString();
                     custdata.Close();
