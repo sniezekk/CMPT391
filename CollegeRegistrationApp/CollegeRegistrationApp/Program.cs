@@ -14,6 +14,7 @@ namespace CollegeRegistrationApp
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             DBConnection connection = new DBConnection();
+            connection.OpenConnection();
             Application.Run(new LoginForm(connection));
         }
     }
