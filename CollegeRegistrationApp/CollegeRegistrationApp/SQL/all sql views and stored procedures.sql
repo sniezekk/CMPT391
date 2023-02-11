@@ -89,3 +89,16 @@ select D.Dept_Name, C.Course_Name, S.Section_ID, S.Semester,S.Year, TS.Day, TS.t
 from dbo.Courses C, dbo.Section S, dbo.Department D, dbo.Instructor I, dbo.Time_Slot TS
 where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and 
 S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = 'winter' and S.Year = '2023';
+
+/*procedure for get classes per semester */
+
+create procedure dbo.getCLasses
+@Semester varchar(6),
+@year int
+as
+begin
+select D.Dept_Name, C.Course_Name, S.Section_ID, S.Semester,S.Year, TS.Day, TS.time_start, Ts.time_end
+from dbo.Courses C, dbo.Section S, dbo.Department D, dbo.Instructor I, dbo.Time_Slot TS
+where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and 
+S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = @semester and S.Year = @year;
+end
