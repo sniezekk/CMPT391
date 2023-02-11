@@ -1,16 +1,21 @@
 using System.Data;
 using System.Data.SqlClient;
+using CollegeRegistrationApp.SQL;
 
 namespace CollegeRegistrationApp
 {
     public partial class LoginForm : Form
     {
-       
-        public LoginForm()
+
+
+        DBConnection connection;
+        public LoginForm(DBConnection input_connection)
         {
             InitializeComponent();
+            connection = input_connection;
         }
 
+        
         
         private void LoginForm_Load(object sender, EventArgs e)
         {
@@ -21,13 +26,12 @@ namespace CollegeRegistrationApp
         {
 
         }
-        readonly String connectionString = "Server = localhost; Database = CollegeRegistration; Trusted_Connection = yes;";
+        
         private void loginButton_Click(object sender, EventArgs e)
 
         {
            
-            SqlConnection connstring = new SqlConnection(connectionString);
-            string query = "Select * from Student Where Student_ID = '" + accountTextInput.Text + "'";
+            
             
 
             if (accountTextInput.Text.StartsWith("E"))
@@ -39,12 +43,17 @@ namespace CollegeRegistrationApp
             }
             else
             {
-                SqlDataAdapter adap = new SqlDataAdapter(query, connstring);
-                DataTable dtb = new DataTable();
-                adap.Fill(dtb);
-                if(dtb.Rows.Count == 1) 
+                string student_ID = accountTextInput.Text;
+                string query = $"select * from Student where Student_ID = {student_ID}";
+                SqlDataReader? custdata = connection.GetDataReader(query);
+                if(custdata != null && custdata.HasRows) 
                 {
-                    new StudentMainForm().ShowDialog();
+                    custdata.Read();
+                    string ID = custdata["Student_ID"].ToString();
+                    custdata.Close();
+                    accountTextInput.Text = "";
+                    passwordTextInput.Text = "";
+                    new StudentMainForm(ID,connection).ShowDialog();
                 }
                 else 
                 {

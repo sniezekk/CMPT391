@@ -1,4 +1,5 @@
-﻿using CollegeRegistrationApp.StudentControls;
+﻿using CollegeRegistrationApp.SQL;
+using CollegeRegistrationApp.StudentControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CollegeRegistrationApp.SQL;
 
 namespace CollegeRegistrationApp
 {
@@ -18,7 +20,11 @@ namespace CollegeRegistrationApp
 
         Color buttonDefaultColor = Color.FromKnownColor(KnownColor.ControlLight);
         Color buttonSelectedColor = Color.FromKnownColor(KnownColor.ControlDark);
-        public StudentMainForm()
+
+        string id;
+        protected DBConnection connection;
+                            
+        public StudentMainForm(string input, DBConnection input_connection)
         {
             InitializeComponent();
             InitializeNavigationControl();
