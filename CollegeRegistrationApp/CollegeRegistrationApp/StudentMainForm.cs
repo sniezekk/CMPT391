@@ -21,20 +21,23 @@ namespace CollegeRegistrationApp
         Color buttonDefaultColor = Color.FromKnownColor(KnownColor.ControlLight);
         Color buttonSelectedColor = Color.FromKnownColor(KnownColor.ControlDark);
 
-        string id;
-        protected DBConnection connection;
-                            
+        private string student_id = "";
+        private DBConnection connection;
+
         public StudentMainForm(string input, DBConnection input_connection)
         {
+            connection= input_connection;
+            student_id = input;
             InitializeComponent();
-            InitializeNavigationControl();
+            InitializeNavigationControl(student_id,connection);
             InitializeNaviButton();
+            
         }
 
-        private void InitializeNavigationControl()
+        private void InitializeNavigationControl(string input, DBConnection input_connection)
         {
             List<UserControl> userControls = new List<UserControl>()
-            { new UserControl1(), new UserControl2(), new UserControl3()};
+            { new UserControl1(input,input_connection), new UserControl2(), new UserControl3()};
 
             studentNaviControl = new StudentNaviControl(userControls,panel2);
             studentNaviControl.Display(0);
@@ -49,7 +52,7 @@ namespace CollegeRegistrationApp
         }
         private void StudentMainForm_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void profileToolStripMenuItem_Click(object sender, EventArgs e)
