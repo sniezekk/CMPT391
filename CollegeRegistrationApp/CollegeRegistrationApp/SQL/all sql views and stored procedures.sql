@@ -162,3 +162,17 @@ if (@co1 = 0)
 else
 	print 'taken'
 print @co1
+
+/*new function for pre-req multiple values*/
+
+create function getPreReq(@courseID int)
+returns @List2 table (course int)
+as
+begin 
+	insert into @List2
+	select Prereq_ID from dbo.preReqCheck where Course_ID = @courseID
+	return;
+end
+go
+
+select * from dbo.getPreReq(70)
