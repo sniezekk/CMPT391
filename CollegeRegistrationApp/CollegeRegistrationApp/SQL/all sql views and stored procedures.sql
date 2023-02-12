@@ -176,3 +176,53 @@ end
 go
 
 select * from dbo.getPreReq(70)
+
+/*new new new*/
+create function getList(@Sem varchar(6))
+returns @List1 table (season varchar(6))
+as
+begin 
+	if (@Sem = 'spring')
+	begin
+		insert into @List1 values ('Winter');
+	end
+	else if (@Sem = 'Summer')
+	begin
+		insert into @List1 values('Winter');
+		insert into @List1 values('Spring');
+	end
+	else if (@Sem = 'fall')
+	begin
+		insert into @List1 values('Winter');
+		insert into @List1 values('Spring');
+		insert into @List1 values('summer');
+	end
+	else
+	begin
+		insert into @List1 values('Winter');
+		insert into @List1 values('Spring');
+		insert into @List1 values('summer');
+		insert into @List1 values('fall');
+	end
+
+	return
+
+	end
+go
+
+create function getc(@Year int, @Student_ID int, @Enrolled int, @Course_ID int, @Semester varchar(6))
+returns int
+as 
+begin
+declare @courseP int;
+set @courseP = (select Se.Course_ID 
+from (select S.Student_ID, T.Section_ID, T.Enrolled 
+from dbo.Student S, dbo.Takes T
+where S.Student_ID = T.Student_ID) as Taken, dbo.Section Se
+where Taken.Section_ID = Se.Section_ID and Taken.Student_ID = @Student_ID and Taken.Enrolled = @Enrolled
+and (Se.year < @Year or Se.year = @Year and (Se.Semester in (select * from dbo.getList(@Semester)))) and Se.Course_ID = @Course_ID)
+return @courseP
+end
+go
+
+select dbo.getc(2024, 1, 1, 15, 'Spring');
