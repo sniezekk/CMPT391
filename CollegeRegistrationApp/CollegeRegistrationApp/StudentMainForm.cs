@@ -37,7 +37,7 @@ namespace CollegeRegistrationApp
         private void InitializeNavigationControl(string input, DBConnection input_connection)
         {
             List<UserControl> userControls = new List<UserControl>()
-            { new UserControl1(input,input_connection), new UserControl2(), new UserControl3()};
+            { new UserControl1(input,input_connection), new UserControl2(input,input_connection), new UserControl3(input,input_connection)};
 
             studentNaviControl = new StudentNaviControl(userControls,panel2);
             studentNaviControl.Display(0);
