@@ -20,13 +20,17 @@ CREATE OR ALTER PROCEDURE dbo.registerInClass
 
 	--check prequisites
 	IF EXISTS (select * from (
-					select *, dbo.getc(@year, @StudentId, 1, c.prereq, @Semester) taken
+					select *, dbo.getc(@year, @StudentId, 1, c.course, @Semester) taken
 					from (
-						select * from courses c 
-						where c.Course_ID = @CourseId
-						) course
-					cross apply dbo.getPreReq(course.Course_ID) prereq) c
-				where c.taken is null)
+						select * from (
+							select * from courses c 
+							where c.Course_ID = @CourseId
+							) course
+						cross 
+						apply dbo.getPreReq(course.Course_ID)
+						) c
+					) prereq
+				where prereq.taken is null)
 		SELECT @Message = 'Does not have prerequisites.'
 		ROLLBACK
 		RETURN;
