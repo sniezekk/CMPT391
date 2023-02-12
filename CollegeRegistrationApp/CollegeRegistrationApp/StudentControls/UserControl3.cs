@@ -14,6 +14,7 @@ using System.Data.SqlClient;
 using CollegeRegistrationApp.SQL;
 using System.CodeDom.Compiler;
 using System.Collections;
+using System.DirectoryServices;
 
 namespace CollegeRegistrationApp.StudentControls
 {
@@ -21,13 +22,14 @@ namespace CollegeRegistrationApp.StudentControls
     {
         private string student_id = "";
         private DBConnection connection;
+
         public UserControl3(string input, DBConnection input_connection)
         {
             InitializeComponent();
             connection = input_connection;
             student_id = input;
-        }
 
+        }
         private void UserControl3_Load(object sender, EventArgs e)
         {
             Load_TermsMenuItems();
@@ -107,7 +109,7 @@ namespace CollegeRegistrationApp.StudentControls
             if (department != "")
             {
                 string query1 = $"execute dbo.getCLasses2 '{splitTerm[0]}', {splitTerm[1]}, '{department}'";
-                MessageBox.Show(query1);
+                //MessageBox.Show(query1);
                 SqlDataReader? allClasses = connection.GetDataReader(query1);
                 if (allClasses != null && allClasses.HasRows)
                 {
@@ -132,7 +134,7 @@ namespace CollegeRegistrationApp.StudentControls
             else
             {
                 string query2 = $"execute dbo.getCLasses '{splitTerm[0]}', {splitTerm[1]}";
-                MessageBox.Show(query2);
+                //MessageBox.Show(query2);
 
                 SqlDataReader? allClasses = connection.GetDataReader(query2);
                 if (allClasses != null && allClasses.HasRows)
@@ -155,6 +157,17 @@ namespace CollegeRegistrationApp.StudentControls
                     }
                 }
             }
+        }
+
+        private void button2_MouseClick(object sender, MouseEventArgs e)
+        {
+            DataGridViewRow r = classScheduleTerm.Rows[classScheduleTerm.SelectedCells[0].RowIndex];
+            courseName = r.Cells[1].Value.ToString();
+            courseSem = r.Cells[2].Value.ToString();
+
+            MessageBox.Show("success");
+
+               
         }
     }
 }

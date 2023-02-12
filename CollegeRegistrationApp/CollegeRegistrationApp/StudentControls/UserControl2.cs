@@ -29,7 +29,7 @@ namespace CollegeRegistrationApp.StudentControls
         {
             int currentYear = DateTime.Now.Year;
             string query1 = $"execute dbo.getEnrolledClasses {student_id}, 1, {currentYear}";
-            MessageBox.Show(query1);
+            //MessageBox.Show(query1);
             SqlDataReader? eClasses = connection.GetDataReader(query1);
             if (eClasses != null && eClasses.HasRows)
             {

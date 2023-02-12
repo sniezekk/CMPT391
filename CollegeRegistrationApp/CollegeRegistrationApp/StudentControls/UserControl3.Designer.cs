@@ -195,6 +195,7 @@
             this.button2.TabIndex = 9;
             this.button2.Text = "Add Class";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_MouseClick);
             // 
             // UserControl3
             // 
