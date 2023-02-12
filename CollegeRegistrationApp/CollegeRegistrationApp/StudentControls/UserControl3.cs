@@ -13,6 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Data.SqlClient;
 using CollegeRegistrationApp.SQL;
 using System.CodeDom.Compiler;
+using System.Collections;
 
 namespace CollegeRegistrationApp.StudentControls
 {
@@ -30,19 +31,16 @@ namespace CollegeRegistrationApp.StudentControls
         private void UserControl3_Load(object sender, EventArgs e)
         {
             Load_TermsMenuItems();
+            Load_DepartmentMenuItems();
         }
 
         private void Load_TermsMenuItems()
         {
-
             foreach (String items in Get_Terms_For_Menu())
             {
                 ToolStripMenuItem item = new ToolStripMenuItem(items);
-
                 comboBox1.Items.Add(items);
-
             }
-
         }
 
         private List<String> Get_Terms_For_Menu()
@@ -80,41 +78,81 @@ namespace CollegeRegistrationApp.StudentControls
                 terms.Add("Spring " + nextYear);
                 terms.Add("Summer" + nextYear);
             }
-
             return terms;
+        }
+
+        private void Load_DepartmentMenuItems()
+        {
+            string query3 = $"select Dept_Name from dbo.Department";
+            SqlDataReader? deptData = connection.GetDataReader(query3);
+
+            if (deptData != null && deptData.HasRows)
+            {
+                while (deptData.Read())
+                {
+                    comboBox2.Items.Add(deptData["Dept_Name"].ToString());
+                }
+
+                deptData.Close();
+            }
 
         }
 
-        private void Term_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             string term = comboBox1.Text;
+            string department = comboBox2.Text;
             string[] splitTerm = term.Split(' ');
 
-
-            string query1 = $"execute dbo.getCLasses '{splitTerm[0]}', {splitTerm[1]}";
-
-            MessageBox.Show(query1);
-            SqlDataReader? allClasses = connection.GetDataReader(query1);
-            if (allClasses != null && allClasses.HasRows)
+            if (department != "")
             {
-                classScheduleTerm.Rows.Clear();
-                while (allClasses.Read())
+                string query1 = $"execute dbo.getCLasses2 '{splitTerm[0]}', {splitTerm[1]}, '{department}'";
+                MessageBox.Show(query1);
+                SqlDataReader? allClasses = connection.GetDataReader(query1);
+                if (allClasses != null && allClasses.HasRows)
                 {
-                    classScheduleTerm.Rows.Add(
-                        allClasses["Dept_Name"].ToString(),
-                        allClasses["Course_Name"].ToString(),
-                        allClasses["Section_ID"].ToString(),
-                        allClasses["Day"].ToString(),
-                        allClasses["time_start"].ToString(),
-                        allClasses["time_end"].ToString()
-                        );
-
-
-                    //MessageBox.Show(term);
+                    classScheduleTerm.Rows.Clear();
+                    while (allClasses.Read())
+                    {
+                        classScheduleTerm.Rows.Add(
+                            allClasses["Dept_Name"].ToString(),
+                            allClasses["Course_Name"].ToString(),
+                            allClasses["Section_ID"].ToString(),
+                            allClasses["Day"].ToString(),
+                            allClasses["time_start"].ToString(),
+                            allClasses["time_end"].ToString()
+                            );
+                    }
+                    if (allClasses != null)
+                    {
+                        allClasses.Close();
+                    }
                 }
-                if (allClasses != null)
+            }
+            else
+            {
+                string query2 = $"execute dbo.getCLasses '{splitTerm[0]}', {splitTerm[1]}";
+                MessageBox.Show(query2);
+
+                SqlDataReader? allClasses = connection.GetDataReader(query2);
+                if (allClasses != null && allClasses.HasRows)
                 {
-                    allClasses.Close();
+                    classScheduleTerm.Rows.Clear();
+                    while (allClasses.Read())
+                    {
+                        classScheduleTerm.Rows.Add(
+                            allClasses["Dept_Name"].ToString(),
+                            allClasses["Course_Name"].ToString(),
+                            allClasses["Section_ID"].ToString(),
+                            allClasses["Day"].ToString(),
+                            allClasses["time_start"].ToString(),
+                            allClasses["time_end"].ToString()
+                            );
+                    }
+                    if (allClasses != null)
+                    {
+                        allClasses.Close();
+                    }
                 }
             }
         }

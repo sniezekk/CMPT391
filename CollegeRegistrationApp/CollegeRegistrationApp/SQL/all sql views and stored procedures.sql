@@ -1,7 +1,7 @@
 /* this will get the pre-requisites for a course 
 (the return value needs to be set to go into stored proceudure #2)
 cause this is returning multiple courses if a course has mroe than 1 pre-req
-and one if a course has only 1 pre-req*/
+and one if a course has only 1 pre-req DELETE?*/
 
 create procedure dbo.getPreReqs
 @course_id int,
@@ -15,7 +15,8 @@ go
 
 declare @p int 
 execute dbo.getPreReqs 1, @p out
-/*this is second stored procedure so that you can put the pre-req course number in and it will let u know if it is taken or not*/
+/*this is second stored procedure so that you can put the pre-req course number in and it will let u 
+know if it is taken or not DELETE?*/
 
 Create Procedure dbo.GetCoursesTakenByStudentID
 @Year int,
@@ -52,45 +53,7 @@ where C.Course_ID = P.Course_ID) T1, dbo.Courses C1
 where T1.Prereq_ID = C1.Course_ID;
 
 
-
-/*these are all the views created for list fo classes available per semester */
-
-Create View dbo.fall2024Classes
-with schemabinding
-as
-select D.Dept_Name, C.Course_Name, S.Section_ID, S.Semester,S.Year, TS.Day, TS.time_start, Ts.time_end
-from dbo.Courses C, dbo.Section S, dbo.Department D, dbo.Instructor I, dbo.Time_Slot TS
-where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and 
-S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = 'fall' and S.Year = '2024';
-
-/*Create Unique Clustered Index UIX_winter2023Classes
-on winter2023Classes;*/
-
-Create View dbo.fall2023Classes
-with schemabinding
-as
-select D.Dept_Name, C.Course_Name, S.Section_ID, S.Semester,S.Year, TS.Day, TS.time_start, Ts.time_end
-from dbo.Courses C, dbo.Section S, dbo.Department D, dbo.Instructor I, dbo.Time_Slot TS
-where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and 
-S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = 'fall' and S.Year = '2023';
-
-Create View dbo.winter2024Classes
-with schemabinding
-as
-select D.Dept_Name, C.Course_Name, S.Section_ID, S.Semester,S.Year, TS.Day, TS.time_start, Ts.time_end
-from dbo.Courses C, dbo.Section S, dbo.Department D, dbo.Instructor I, dbo.Time_Slot TS
-where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and 
-S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = 'winter' and S.Year = '2024';
-
-Create View dbo.winter2023Classes
-with schemabinding
-as
-select D.Dept_Name, C.Course_Name, S.Section_ID, S.Semester,S.Year, TS.Day, TS.time_start, Ts.time_end
-from dbo.Courses C, dbo.Section S, dbo.Department D, dbo.Instructor I, dbo.Time_Slot TS
-where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and 
-S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = 'winter' and S.Year = '2023';
-
-/*procedure for get classes per semester */
+/*procedure for get classes per semester without department */
 
 create procedure dbo.getCLasses
 @Semester varchar(6),
@@ -103,7 +66,38 @@ where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and
 S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = @semester and S.Year = @year;
 end
 
+/*procedure for get classes per semester with department */
+create or alter procedure dbo.getCLasses2
+@Semester varchar(6),
+@year int,
+@Department varchar(50)
+as
+begin
+select D.Dept_Name, C.Course_Name, S.Section_ID, TS.Day, TS.time_start, Ts.time_end
+from dbo.Courses C, dbo.Section S, dbo.Department D, dbo.Instructor I, dbo.Time_Slot TS
+where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and 
+S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = @semester and S.Year = @year 
+and D.Dept_Name = @Department;
+end
 
+/*procedure to get enrolled classes*/
+
+create or alter procedure dbo.getEnrolledClasses
+@studentID int,
+@enrolled int,
+@year int
+as
+begin
+select C.Course_Name, Taken2.Section_ID, Taken2.Semester, Taken2.Year, Taken2.Room_ID, Ts.Day, TS.time_start, TS.time_end
+from
+(select Se.Section_ID, Se.Semester, Se.Year, Se.Room_ID, Se.Instructor_ID, Se.Time_Slot_ID, Se.Course_ID
+from (select S.Student_ID, T.Section_ID, T.Enrolled
+from dbo.Student S, dbo.Takes T
+where S.Student_ID = T.Student_ID) as Taken, dbo.Section Se
+where Taken.Section_ID = Se.Section_ID and Taken.Student_ID = @studentID and Taken.Enrolled = @enrolled
+and Se.year = @year) as Taken2, dbo.Time_Slot TS, dbo.Courses C
+where Taken2.Time_Slot_ID = TS.Time_Slot_ID and C.Course_ID = Taken2.Course_ID;
+end
 
 /*k this function and procedure works*/
 
@@ -226,3 +220,4 @@ end
 go
 
 select dbo.getc(2024, 1, 1, 15, 'Spring');
+
