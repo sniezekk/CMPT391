@@ -58,7 +58,11 @@ namespace CollegeRegistrationApp.StudentControls
                 textBox4.Text = studentData["State"].ToString();
                 textBox5.Text = studentData["Zip_Code"].ToString();
                 textBox6.Text = studentData["Phone"].ToString();
+
+                
             }
+            studentData.Close();
+
         }
 
         private void label8_Click(object sender, EventArgs e)
@@ -86,6 +90,7 @@ namespace CollegeRegistrationApp.StudentControls
             infoList.Add(state);
             infoList.Add(zip);
             infoList.Add(phone);
+
             
 
             if (infoList.Contains(""))
@@ -104,15 +109,17 @@ namespace CollegeRegistrationApp.StudentControls
                 
             }
 
+           
 
-            string update_student = "UPDATE Student SET " +
-                $"Unit_Number = '{unitnumber}', " +
-                $"Street_Number = '{streetnumber}' " +
-                $"Street_Address = '{streetadd}' " +
-                $"City = '{city}' " +
-                $"State = '{state}' " +
-                $"Zip_Code = '{zip}' " +
-                $"Phone = '{phone}' " +
+            string update_student =
+                "UPDATE Student SET " +
+                $"Unit_Number = {unitnumber}, " +
+                $"Street_Number = {streetnumber} " +
+                $"Street_Address ={streetadd} " +
+                $"City = {city} " +
+                $"State = {state} " +
+                $"Zip_Code = {zip} " +
+                $"Phone = {phone} " +
                 $"WHERE Student_ID = {student_id}";
 
             int row_updated = connection.ExecuteMutation(update_student);
