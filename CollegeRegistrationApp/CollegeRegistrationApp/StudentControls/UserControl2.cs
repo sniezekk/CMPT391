@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using CollegeRegistrationApp.SQL;
+using System.Xml.Serialization;
 
 namespace CollegeRegistrationApp.StudentControls
 {
@@ -16,13 +17,17 @@ namespace CollegeRegistrationApp.StudentControls
     {
         private string student_id = "";
         private DBConnection connection;
-        public UserControl2(string input, DBConnection input_connection)
+
+        List<string> cart = new List<string>();
+        public UserControl2(string input, DBConnection input_connection, List<string> C1)
         {
             InitializeComponent();
             connection = input_connection;
             student_id = input;
-
             loadCurrentlyEnrolled();
+            cart = C1;
+            loadCart();
+            //MessageBox.Show(cart.Count.ToString());
         }
 
         private void loadCurrentlyEnrolled()
@@ -53,9 +58,60 @@ namespace CollegeRegistrationApp.StudentControls
                 }
             }
         }
+
+        private void loadCart()
+        {
+            if (cart.Count != 0)
+            {
+                for (int i = 0; i < cart.Count; i++)
+                {
+                    string query2 = $"select * from secCourTimeTable where Section_ID = {cart[i]}";
+                    SqlDataReader? eCart = connection.GetDataReader(query2);
+                    if (eCart != null && eCart.HasRows)
+                    {
+                        while (eCart.Read())
+                        {
+                            dataGridView2.Rows.Add(
+                                eCart["Course_Name"].ToString(),
+                                eCart["Section_ID"].ToString(),
+                                eCart["Semester"].ToString(),
+                                eCart["year"].ToString(),
+                                eCart["Room_ID"].ToString(),
+                                eCart["Day"].ToString(),
+                                eCart["time_start"].ToString(),
+                                eCart["time_end"].ToString()
+                                );
+                        }
+                        if (eCart != null)
+                        {
+                            eCart.Close();
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //refresh button
+            loadCart();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //empty button
+            cart.Clear(); 
+            dataGridView2.Rows.Clear();
+            loadCart();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
+            //enroll button
 
+            loadCurrentlyEnrolled();
         }
     }
 }
+

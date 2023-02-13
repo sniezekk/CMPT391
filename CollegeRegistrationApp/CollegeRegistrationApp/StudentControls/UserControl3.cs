@@ -15,6 +15,7 @@ using CollegeRegistrationApp.SQL;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.DirectoryServices;
+using System.Collections.Generic;
 
 namespace CollegeRegistrationApp.StudentControls
 {
@@ -22,12 +23,17 @@ namespace CollegeRegistrationApp.StudentControls
     {
         private string student_id = "";
         private DBConnection connection;
+        private List<string> cart = new List<string>();
 
-        public UserControl3(string input, DBConnection input_connection)
+        public UserControl3(string input, DBConnection input_connection, List<string> C1)
         {
             InitializeComponent();
             connection = input_connection;
             student_id = input;
+            cart = C1;
+            classScheduleTerm.MultiSelect = true;
+            classScheduleTerm.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
 
         }
         private void UserControl3_Load(object sender, EventArgs e)
@@ -162,13 +168,19 @@ namespace CollegeRegistrationApp.StudentControls
         private void button2_MouseClick(object sender, MouseEventArgs e)
         {
             DataGridViewRow r = classScheduleTerm.Rows[classScheduleTerm.SelectedCells[0].RowIndex];
-            courseName = r.Cells[1].Value.ToString();
-            courseSem = r.Cells[2].Value.ToString();
+            string courseName = r.Cells[1].Value.ToString();
+            string courseSem = r.Cells[2].Value.ToString();
 
-            MessageBox.Show("success");
-
-               
-        }
+            if (cart.Count >=5)
+            {
+                MessageBox.Show("You have exceeded the maximum cart enrollement for " + comboBox1.Text);
+            }
+            else
+            {
+                cart.Add(courseSem);
+                MessageBox.Show("You have added " + courseName);
+            }
+         }
     }
 }
 

@@ -20,12 +20,13 @@ namespace CollegeRegistrationApp.StudentControls
 
         private string student_id = "";
         private DBConnection connection;
-        public UserControl1(string input, DBConnection input_connection)
+        private List<string> cart = new List<string>();
+        public UserControl1(string input, DBConnection input_connection,List<string> C1)
         {
             InitializeComponent();
             connection= input_connection;
             student_id = input;
-            
+            cart = C1;
         }
 
         private void label1_Click(object sender, EventArgs e)
