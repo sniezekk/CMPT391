@@ -52,6 +52,7 @@ from dbo.Courses C, dbo.Prerequisites P
 where C.Course_ID = P.Course_ID) T1, dbo.Courses C1
 where T1.Prereq_ID = C1.Course_ID;
 
+create Unique Clustered Index UIX_pre_req on dbo.preReqCheck(Prereq_ID)
 
 /*procedure for get classes per semester without department */
 
@@ -98,6 +99,18 @@ where Taken.Section_ID = Se.Section_ID and Taken.Student_ID = @studentID and Tak
 and Se.year = @year) as Taken2, dbo.Time_Slot TS, dbo.Courses C
 where Taken2.Time_Slot_ID = TS.Time_Slot_ID and C.Course_ID = Taken2.Course_ID;
 end
+
+
+/* sectioncoursetime  materialized view */
+
+Create View dbo.secCourTimeTable
+with schemabinding
+as
+select C.Course_Name,S.Section_ID,S.Semester,s.Year,S.Room_ID, TS.time_start,TS.time_end
+from dbo.Section S, dbo.Time_Slot TS, dbo.Courses C
+where S.Time_Slot_ID = TS.Time_Slot_ID and C.Course_ID = S.Course_ID
+
+create Unique Clustered Index UIX_sectionNumber on dbo.secCourTimeTable(Section_ID)
 
 /*k this function and procedure works*/
 
