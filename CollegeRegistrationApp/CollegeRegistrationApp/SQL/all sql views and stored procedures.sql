@@ -106,9 +106,10 @@ end
 Create View dbo.secCourTimeTable
 with schemabinding
 as
-select C.Course_Name,S.Section_ID,S.Semester,s.Year,Ts.day, S.Room_ID, TS.time_start,TS.time_end
+select C.Course_Name,S.Section_ID,S.Semester,s.Year, Ts.Day,S.Room_ID, TS.time_start,TS.time_end
 from dbo.Section S, dbo.Time_Slot TS, dbo.Courses C
 where S.Time_Slot_ID = TS.Time_Slot_ID and C.Course_ID = S.Course_ID
+
 
 create Unique Clustered Index UIX_sectionNumber on dbo.secCourTimeTable(Section_ID)
 
