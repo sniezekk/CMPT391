@@ -43,7 +43,7 @@ namespace CollegeRegistrationApp.StudentControls
                 studentData.Read();
                 string name = studentData["First_Name"].ToString() + " " + studentData["Last_Name"].ToString();
                 label1.Text = name;
-                if (studentData["Unit_Number"].ToString() == "NULL")
+                if (studentData["Unit_Number"].ToString() == "0")
                 {
                     textBox1.Text = "";
 
@@ -74,6 +74,12 @@ namespace CollegeRegistrationApp.StudentControls
 
 
         {
+
+            if (textBox1.Text == "0")
+            {
+                textBox1.Text = "";
+            }
+
             string unitnumber = textBox1.Text;
             string streetnumber = textBox2.Text;
             string streetadd = textBox7.Text;
@@ -81,57 +87,52 @@ namespace CollegeRegistrationApp.StudentControls
             string state = textBox4.Text;
             string zip = textBox5.Text;
             string phone = textBox6.Text;
-            
-
-            List<String> infoList = new List<String>();
-            infoList.Add(streetnumber);
-            infoList.Add(streetadd);
-            infoList.Add(city);
-            infoList.Add(state);
-            infoList.Add(zip);
-            infoList.Add(phone);
 
             
 
-            if (infoList.Contains(""))
-                {
-                MessageBox.Show("All * fields must be filled");
-                return;
+            if (unitnumber == "")
+            {
+                unitnumber = "null";
+            }
 
+            if (streetnumber == "" || streetadd == "" || city == "" || state == "" || zip == "" || phone == "")
+            {
+                MessageBox.Show("Please fill in required fields");
             }
             else
             {
-                infoList.Add(unitnumber);
-                if (infoList.Contains(""))
-                {
-                    unitnumber = null;
-                }
-                
-            }
-
-           
-
-            string update_student =
+                string update_student =
                 "UPDATE Student SET " +
-                $"Unit_Number = {unitnumber}, " +
-                $"Street_Number = {streetnumber} " +
-                $"Street_Address ={streetadd} " +
-                $"City = {city} " +
-                $"State = {state} " +
-                $"Zip_Code = {zip} " +
-                $"Phone = {phone} " +
+                $"Unit_Number= {unitnumber}," +
+                $"Street_Number= {streetnumber}," +
+                $"Street_Address= '{streetadd}'," +
+                $"City= '{city}'," +
+                $"State= '{state}'," +
+                $"Zip_Code='{zip}'," +
+                $"Phone='{phone}'" +
+
+
                 $"WHERE Student_ID = {student_id}";
 
-            int row_updated = connection.ExecuteMutation(update_student);
-            if (row_updated == 1)
-            {
-                MessageBox.Show("Successfully updated info");
-                
+                int row_updated = connection.ExecuteMutation(update_student);
+                if (row_updated == 1)
+                {
+                    MessageBox.Show("Successfully updated info");
+
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong");
+                }
+
             }
-            else
-            {
-                MessageBox.Show("Something went wrong");
-            }
+
+            
+        }
+
+        private void textBox7_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
