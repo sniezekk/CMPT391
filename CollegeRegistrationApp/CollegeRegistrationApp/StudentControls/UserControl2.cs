@@ -95,6 +95,7 @@ namespace CollegeRegistrationApp.StudentControls
         private void button3_Click(object sender, EventArgs e)
         {
             //refresh button
+            dataGridView2.Rows.Clear();
             loadCart();
         }
 

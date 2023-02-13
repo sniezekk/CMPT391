@@ -41,7 +41,7 @@ else
 	print 'taken'
 print @co
 
-/*this is the view for pre-requisites check*/
+/*this is the view for pre-requisites check */
 
 Create View dbo.preReqCheck
 with schemabinding
@@ -54,7 +54,7 @@ where T1.Prereq_ID = C1.Course_ID;
 
 create Unique Clustered Index UIX_pre_req on dbo.preReqCheck(Prereq_ID)
 
-/*procedure for get classes per semester without department */
+/*procedure for get classes per semester without department A*/
 
 create procedure dbo.getCLasses
 @Semester varchar(6),
@@ -67,7 +67,7 @@ where S.Course_ID = C.Course_ID and D.Dept_ID = C.Dept_id and
 S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Semester = @semester and S.Year = @year;
 end
 
-/*procedure for get classes per semester with department */
+/*procedure for get classes per semester with department A*/
 create or alter procedure dbo.getCLasses2
 @Semester varchar(6),
 @year int,
@@ -81,7 +81,7 @@ S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Sem
 and D.Dept_Name = @Department;
 end
 
-/*procedure to get enrolled classes*/
+/*procedure to get enrolled classes A*/
 
 create or alter procedure dbo.getEnrolledClasses
 @studentID int,
@@ -101,7 +101,7 @@ where Taken2.Time_Slot_ID = TS.Time_Slot_ID and C.Course_ID = Taken2.Course_ID;
 end
 
 
-/* sectioncoursetime  materialized view */
+/* sectioncoursetime  materialized view A*/
 
 Create View dbo.secCourTimeTable
 with schemabinding
@@ -109,7 +109,6 @@ as
 select C.Course_Name,S.Section_ID,S.Semester,s.Year, Ts.Day,S.Room_ID, TS.time_start,TS.time_end
 from dbo.Section S, dbo.Time_Slot TS, dbo.Courses C
 where S.Time_Slot_ID = TS.Time_Slot_ID and C.Course_ID = S.Course_ID
-
 
 create Unique Clustered Index UIX_sectionNumber on dbo.secCourTimeTable(Section_ID)
 
