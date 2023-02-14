@@ -41,6 +41,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.Course_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CourseN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SectionN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sem = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,9 +52,6 @@
             this.roomN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.day1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TimeEn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -59,10 +60,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(361, 19);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(469, 24);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(471, 41);
+            this.label1.Size = new System.Drawing.Size(628, 54);
             this.label1.TabIndex = 1;
             this.label1.Text = "Where enrolled classes are viewed";
             // 
@@ -80,12 +81,12 @@
             this.day,
             this.timeS,
             this.endT});
-            this.dataGridView1.Location = new System.Drawing.Point(100, 521);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridView1.Location = new System.Drawing.Point(130, 667);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(966, 304);
+            this.dataGridView1.Size = new System.Drawing.Size(1256, 389);
             this.dataGridView1.TabIndex = 2;
             // 
             // Coursename
@@ -148,10 +149,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(100, 449);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(130, 575);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(206, 32);
+            this.label2.Size = new System.Drawing.Size(274, 45);
             this.label2.TabIndex = 3;
             this.label2.Text = "Currently Enrolled";
             // 
@@ -159,10 +160,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(99, 78);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(129, 100);
+            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 32);
+            this.label3.Size = new System.Drawing.Size(78, 45);
             this.label3.TabIndex = 4;
             this.label3.Text = "Cart";
             // 
@@ -172,6 +173,7 @@
             this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Course_Id,
             this.CourseN,
             this.SectionN,
             this.sem,
@@ -179,13 +181,57 @@
             this.roomN,
             this.day1,
             this.TimeEn});
-            this.dataGridView2.Location = new System.Drawing.Point(100, 114);
-            this.dataGridView2.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridView2.Location = new System.Drawing.Point(130, 146);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 29;
-            this.dataGridView2.Size = new System.Drawing.Size(966, 292);
+            this.dataGridView2.Size = new System.Drawing.Size(1256, 374);
             this.dataGridView2.TabIndex = 5;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button1.Location = new System.Drawing.Point(1069, 530);
+            this.button1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(153, 46);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Enroll";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button2.Location = new System.Drawing.Point(1232, 530);
+            this.button2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(153, 46);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Empty";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button3.Location = new System.Drawing.Point(906, 530);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(153, 46);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "Refresh";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // Course_Id
+            // 
+            this.Course_Id.HeaderText = "Course Id";
+            this.Course_Id.MinimumWidth = 10;
+            this.Course_Id.Name = "Course_Id";
+            this.Course_Id.ReadOnly = true;
+            this.Course_Id.Width = 200;
             // 
             // CourseN
             // 
@@ -236,44 +282,9 @@
             this.TimeEn.Name = "TimeEn";
             this.TimeEn.Width = 150;
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.button1.Location = new System.Drawing.Point(822, 414);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(118, 36);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Enroll";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.button2.Location = new System.Drawing.Point(948, 414);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(118, 36);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Empty";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.button3.Location = new System.Drawing.Point(697, 414);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(118, 36);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Refresh";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // UserControl2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -283,9 +294,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "UserControl2";
-            this.Size = new System.Drawing.Size(1215, 921);
+            this.Size = new System.Drawing.Size(1580, 1179);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
@@ -317,5 +328,6 @@
         private DataGridViewTextBoxColumn day1;
         private DataGridViewTextBoxColumn TimeEn;
         private Button button3;
+        private DataGridViewTextBoxColumn Course_Id;
     }
 }

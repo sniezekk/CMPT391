@@ -72,6 +72,7 @@ namespace CollegeRegistrationApp.StudentControls
                         while (eCart.Read())
                         {
                             dataGridView2.Rows.Add(
+                                eCart["Course_Id"].ToString(),
                                 eCart["Course_Name"].ToString(),
                                 eCart["Section_ID"].ToString(),
                                 eCart["Semester"].ToString(),
@@ -110,6 +111,28 @@ namespace CollegeRegistrationApp.StudentControls
         private void button1_Click(object sender, EventArgs e)
         {
             //enroll button
+
+            //get selected row
+            int selected = dataGridView2.SelectedCells[0].RowIndex;
+            DataGridViewRow row = dataGridView2.Rows[selected];
+            if (row != null)
+            {
+                String sectionNumber = row.Cells[2].Value.ToString();
+                String semester = row.Cells[3].Value.ToString();
+                String year = row.Cells[4].Value.ToString();
+                String courseId = row.Cells[0].Value.ToString();
+
+                String returnVal = connection.ExecuteRegisterProcedureWithReturn(
+                    student_id,
+                    courseId,
+                    sectionNumber,
+                    year,
+                    semester
+                    );
+                MessageBox.Show(returnVal);
+
+            }
+
 
             loadCurrentlyEnrolled();
         }
