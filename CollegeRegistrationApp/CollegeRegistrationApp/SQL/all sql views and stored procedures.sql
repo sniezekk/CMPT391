@@ -3,7 +3,7 @@
 cause this is returning multiple courses if a course has mroe than 1 pre-req
 and one if a course has only 1 pre-req DELETE?*/
 
-create procedure dbo.getPreReqs
+create or alter procedure dbo.getPreReqs
 @course_id int,
 @courses int output
 as
@@ -18,7 +18,8 @@ execute dbo.getPreReqs 1, @p out
 /*this is second stored procedure so that you can put the pre-req course number in and it will let u 
 know if it is taken or not DELETE?*/
 
-Create Procedure dbo.GetCoursesTakenByStudentID
+
+Create or alter Procedure dbo.GetCoursesTakenByStudentID
 @Year int,
 @Student_ID int,
 @Enrolled int,
@@ -41,9 +42,10 @@ else
 	print 'taken'
 print @co
 
+
 /*this is the view for pre-requisites check */
 
-Create View dbo.preReqCheck
+Create or alter View dbo.preReqCheck
 with schemabinding
 as
 select T1.Course_ID, T1.Course_Name, T1.Prereq_ID, C1.Course_Name as Prereq_Course_Name
@@ -56,7 +58,7 @@ create Unique Clustered Index UIX_pre_req on dbo.preReqCheck(Prereq_ID)
 
 /*procedure for get classes per semester without department A*/
 
-create procedure dbo.getCLasses
+create or alter procedure dbo.getCLasses
 @Semester varchar(6),
 @year int
 as
@@ -81,6 +83,7 @@ S.Instructor_ID = I.Instructor_ID and TS.Time_Slot_ID = S.Time_Slot_ID and S.Sem
 and D.Dept_Name = @Department;
 end
 
+
 /*procedure to get enrolled classes A*/
 
 create or alter procedure dbo.getEnrolledClasses
@@ -100,10 +103,11 @@ and Se.year = @year) as Taken2, dbo.Time_Slot TS, dbo.Courses C
 where Taken2.Time_Slot_ID = TS.Time_Slot_ID and C.Course_ID = Taken2.Course_ID;
 end
 
+ 
 
 /* sectioncoursetime  materialized view A*/
 
-Create View dbo.secCourTimeTable
+Create or alter View dbo.secCourTimeTable
 with schemabinding
 as
 select C.Course_Name,S.Section_ID,S.Semester,s.Year, Ts.Day,S.Room_ID, TS.time_start,TS.time_end
@@ -112,9 +116,13 @@ where S.Time_Slot_ID = TS.Time_Slot_ID and C.Course_ID = S.Course_ID
 
 create Unique Clustered Index UIX_sectionNumber on dbo.secCourTimeTable(Section_ID)
 
-/*k this function and procedure works*/
 
-create function getList(@Sem varchar(6))
+
+
+/*
+/*k this function and procedure works*/
+/* we are not using this procdure*/
+create or alter function getList(@Sem varchar(6))
 returns @List1 table (season varchar(6))
 as
 begin 
@@ -145,7 +153,10 @@ begin
 
 	end
 go
+*/
 
+/*
+ /* we are not using this procdure*/
 create or alter procedure dbo.getc
 @Year int,
 @Student_ID int,
@@ -170,9 +181,14 @@ else
 	print 'taken'
 print @co1
 
-/*new function for pre-req multiple values*/
+*/
 
-create function getPreReq(@courseID int)
+
+
+
+
+/*new function for pre-req multiple values*/
+create or alter function getPreReq(@courseID int)
 returns @List2 table (course int)
 as
 begin 
@@ -184,8 +200,9 @@ go
 
 select * from dbo.getPreReq(70)
 
-/*new new new*/
-create function getList(@Sem varchar(6))
+
+/**/
+create or alter function getList(@Sem varchar(6))
 returns @List1 table (season varchar(6))
 as
 begin 
@@ -217,9 +234,9 @@ begin
 	end
 go
 
-create function getc(@Year int, @Student_ID int, @Enrolled int, @Course_ID int, @Semester varchar(6))
-returns int
-as 
+--checks if the user has the prereck class and is still enrolled in it
+create or alter function PreReckEnrolledCheck(@Year int, @Student_ID int, @Enrolled int, @Course_ID int, @Semester varchar(6))
+returns int as 
 begin
 declare @courseP int;
 set @courseP = (select Se.Course_ID 
@@ -228,9 +245,35 @@ from dbo.Student S, dbo.Takes T
 where S.Student_ID = T.Student_ID) as Taken, dbo.Section Se
 where Taken.Section_ID = Se.Section_ID and Taken.Student_ID = @Student_ID and Taken.Enrolled = @Enrolled
 and (Se.year < @Year or Se.year = @Year and (Se.Semester in (select * from dbo.getList(@Semester)))) and Se.Course_ID = @Course_ID)
-return @courseP
+if (@courseP is null) 
+	begin
+		return 0
+	end
+else
+	begin
+		return 1
+	end 
+return 0
 end
 go
 
-select dbo.getc(2024, 1, 1, 15, 'Spring');
+--select dbo.PreReckEnrolledCheck(2024, 1, 1, 15, 'Spring');  --test case true 
+--select dbo.PreReckEnrolledCheck(2024, 1, 1, 14, 'Spring');  --test case false 
+
+
+
+--gets how many people are enrolled in a section currently
+--select dbo.spacesFree(18); --return 0 persons in the class
+--select dbo.spacesFree(2); --return 1 persons in the class 
+create or alter function spacesFree(@Section_ID int)
+returns int as
+begin
+declare @count int;
+set @count = (select count(*) from Takes where Takes.Section_ID = @Section_ID and Takes.Enrolled = 1)
+return @count
+end
+go
+
+
+
 
