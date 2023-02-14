@@ -235,7 +235,7 @@ begin
 go
 
 --checks if the user has the prereck class and is still enrolled in it
-create or alter function PreReckEnrolledCheck(@Year int, @Student_ID int, @Enrolled int, @Course_ID int, @Semester varchar(6))
+create or alter function isEnrolled(@Year int, @Student_ID int, @Enrolled int, @Course_ID int, @Semester varchar(6))
 returns int as 
 begin
 declare @courseP int;
