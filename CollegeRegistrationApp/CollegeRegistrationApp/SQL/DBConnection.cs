@@ -67,7 +67,7 @@ namespace CollegeRegistrationApp.SQL
             return rowsAffected;
         }
 
-        public String? ExecuteRegisterProcedureWithReturn(
+        public String? registerInClass(
             String StudentId,
             String CourseId,
             String SectionId,
