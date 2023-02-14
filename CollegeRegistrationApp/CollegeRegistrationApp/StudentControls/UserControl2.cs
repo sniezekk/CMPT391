@@ -122,7 +122,7 @@ namespace CollegeRegistrationApp.StudentControls
                 String year = row.Cells[4].Value.ToString();
                 String courseId = row.Cells[0].Value.ToString();
 
-                String returnVal = connection.ExecuteRegisterProcedureWithReturn(
+                String returnVal = connection.registerInClass(
                     student_id,
                     courseId,
                     sectionNumber,
