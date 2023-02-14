@@ -1,4 +1,5 @@
-﻿using CollegeRegistrationApp.StudentControls;
+﻿using CollegeRegistrationApp.SQL;
+using CollegeRegistrationApp.StudentControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CollegeRegistrationApp.SQL;
 
 namespace CollegeRegistrationApp
 {
@@ -18,17 +20,25 @@ namespace CollegeRegistrationApp
 
         Color buttonDefaultColor = Color.FromKnownColor(KnownColor.ControlLight);
         Color buttonSelectedColor = Color.FromKnownColor(KnownColor.ControlDark);
-        public StudentMainForm()
+
+        private string student_id = "";
+        private DBConnection connection;
+
+        public StudentMainForm(string input, DBConnection input_connection)
         {
+            connection= input_connection;
+            student_id = input;
             InitializeComponent();
-            InitializeNavigationControl();
+            InitializeNavigationControl(student_id,connection);
             InitializeNaviButton();
+            
         }
 
-        private void InitializeNavigationControl()
+        private void InitializeNavigationControl(string input, DBConnection input_connection)
         {
+            List<string> cart = new List<string>();
             List<UserControl> userControls = new List<UserControl>()
-            { new UserControl1(), new UserControl2(), new UserControl3()};
+            { new UserControl1(input,input_connection,cart), new UserControl2(input,input_connection,cart), new UserControl3(input,input_connection,cart)};
 
             studentNaviControl = new StudentNaviControl(userControls,panel2);
             studentNaviControl.Display(0);
@@ -43,7 +53,7 @@ namespace CollegeRegistrationApp
         }
         private void StudentMainForm_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void profileToolStripMenuItem_Click(object sender, EventArgs e)
