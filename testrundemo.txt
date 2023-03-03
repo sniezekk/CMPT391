@@ -1,0 +1,74 @@
+SET IDENTITY_INSERT Section ON 
+INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (1001,'Fall',2023,20,1,1,1,77);
+INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (1002,'Fall',2023,20,1,1,11,77); --fail time conflict
+INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (1003,'Fall',2023,20,2,1,31,77); --fail full
+INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (1004,'Fall',2023,20,2,1,61,77);
+INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (1005,'Fall',2023,20,3,1,71,77);
+INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (1006,'Fall',2023,20,4,1,81,77);
+INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (1007,'Fall',2023,20,5,1,91,77);
+INSERT INTO Section(Section_ID,Semester,Year,Capacity,Time_Slot_ID,Room_ID,Course_ID,Instructor_ID) VALUES (1008,'Fall',2023,10,1,72,10,28); --cant prereck
+
+SET IDENTITY_INSERT Section OFF
+
+
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('200', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('201', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('202', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('203', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('204', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('205', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('206', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('207', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('208', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('209', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('210', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('211', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('212', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('213', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('214', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('215', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('216', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('217', '1001', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('218', '1001', 1);
+
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('300', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('301', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('302', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('303', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('304', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('305', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('306', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('307', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('308', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('309', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('310', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('311', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('312', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('313', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('314', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('315', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('316', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('317', '1002', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('318', '1002', 1);
+
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('200', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('201', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('202', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('203', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('204', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('205', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('206', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('207', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('208', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('209', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('210', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('211', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('212', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('213', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('214', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('215', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('216', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('217', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('218', '1003', 1);
+insert into Takes (Student_ID, Section_ID, Enrolled) values ('218', '1003', 1);
+
