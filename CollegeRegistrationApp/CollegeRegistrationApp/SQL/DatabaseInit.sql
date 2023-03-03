@@ -2,6 +2,44 @@
 --Assume sql database is already created with name 'CollegeRegistration'
 use CollegeRegistration;
 
+
+create table WHcourses (
+	CID int identity(1, 1) primary key,
+	Title varchar(3),
+	Dept varchar(15),
+	No_credits int
+);
+
+create table WHinstructor (
+	IID int identity(1, 1) primary key,
+	First_Name varchar(20),
+	Last_Name varchar(20),
+	Title varchar(15),
+	Dept varchar(15),
+	Gender varchar(2)
+);
+
+create table WHdate (
+	dateKey int identity(1, 1) primary key,
+	d_Year int,
+	term int,
+);
+
+create table FactTable (
+	IID int,
+	CID int, 
+	dateKey int,
+	no_course int,
+	foreign key (CID) references WHcourses(CID),
+	foreign key (IID) references WHinstructor(IID),
+	foreign key (dateKey) references WHdate(dataKey),
+	PRIMARY KEY (IID, CID, dateKey)
+);
+
+
+
+
+
 --Create Department Table
 create table Department (
 	Dept_ID int identity(1, 1) primary key,
