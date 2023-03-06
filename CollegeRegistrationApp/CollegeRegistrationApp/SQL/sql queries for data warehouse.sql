@@ -68,7 +68,7 @@ ORDER BY
 
 
 -- drill down based on Date year
-SELECT d.d_Year, COUNT(*) AS total_courses
+SELECT d.d_Year, COUNT(*) AS Total_courses
 FROM FactTable f
 JOIN WHdate d ON f.dateKey = d.dateKey
 GROUP BY d.d_Year
