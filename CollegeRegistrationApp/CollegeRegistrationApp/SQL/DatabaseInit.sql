@@ -32,7 +32,7 @@ create table FactTable (
 	no_course int,
 	foreign key (CID) references WHcourses(CID),
 	foreign key (IID) references WHinstructor(IID),
-	foreign key (dateKey) references WHdate(dataKey),
+	foreign key (dateKey) references WHdate(dateKey),
 	PRIMARY KEY (IID, CID, dateKey)
 );
 
