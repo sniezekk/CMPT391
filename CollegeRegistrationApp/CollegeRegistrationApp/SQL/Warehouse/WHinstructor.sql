@@ -1,3 +1,5 @@
+SET IDENTITY_INSERT WHinstructor ON
+
 insert into WHinstructor (IID, First_Name, Last_Name, Title, Dept, Gender) values (1, 'Lorenzo', 'Teal', 'Head', 'English', 'M');
 insert into WHinstructor (IID, First_Name, Last_Name, Title, Dept, Gender) values (2, 'Christel', 'Trueman', 'Instructor', 'Engineer', 'F');
 insert into WHinstructor (IID, First_Name, Last_Name, Title, Dept, Gender) values (3, 'Brok', 'Fortescue', 'Professor', 'Mathematics', 'M');
@@ -38,3 +40,5 @@ insert into WHinstructor (IID, First_Name, Last_Name, Title, Dept, Gender) value
 insert into WHinstructor (IID, First_Name, Last_Name, Title, Dept, Gender) values (38, 'Stephen', 'Mair', 'Instructor', 'Business', 'M');
 insert into WHinstructor (IID, First_Name, Last_Name, Title, Dept, Gender) values (39, 'Jeffie', 'Diggles', 'Head', 'CompSci', 'M');
 insert into WHinstructor (IID, First_Name, Last_Name, Title, Dept, Gender) values (40, 'Mariska', 'Thomson', 'Assistant', 'Engineer', 'F');
+
+SET IDENTITY_INSERT WHinstructor OFF
