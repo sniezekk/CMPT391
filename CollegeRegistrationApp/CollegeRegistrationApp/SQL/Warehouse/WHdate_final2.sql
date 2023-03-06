@@ -1,3 +1,5 @@
+SET IDENTITY_INSERT WHdate ON
+
 insert into WHdate (dateKey, d_Year, term) values (1, 1990, 1);
 insert into WHdate (dateKey, d_Year, term) values (2, 1991, 1);
 insert into WHdate (dateKey, d_Year, term) values (3, 1992, 1);
@@ -134,3 +136,5 @@ insert into WHdate (dateKey, d_Year, term) values (133, 2020, 4);
 insert into WHdate (dateKey, d_Year, term) values (134, 2021, 4);
 insert into WHdate (dateKey, d_Year, term) values (135, 2022, 4);
 insert into WHdate (dateKey, d_Year, term) values (136, 2023, 4);
+
+SET IDENTITY_INSERT WHdate OFF

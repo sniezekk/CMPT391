@@ -1,3 +1,5 @@
+SET IDENTITY_INSERT WHcourses ON
+
 insert into WHcourses (CID, Title, Dept, No_credits) values (1, 187, 'CompSci', 4);
 insert into WHcourses (CID, Title, Dept, No_credits) values (2, 481, 'Mathematics', 6);
 insert into WHcourses (CID, Title, Dept, No_credits) values (3, 378, 'English', 5);
@@ -998,3 +1000,5 @@ insert into WHcourses (CID, Title, Dept, No_credits) values (997, 271, 'Design',
 insert into WHcourses (CID, Title, Dept, No_credits) values (998, 165, 'Business', 9);
 insert into WHcourses (CID, Title, Dept, No_credits) values (999, 538, 'CompSci', 5);
 insert into WHcourses (CID, Title, Dept, No_credits) values (1000, 546, 'Design', 3);
+
+SET IDENTITY_INSERT WHcourses OFF
