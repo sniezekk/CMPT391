@@ -35,7 +35,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
@@ -46,7 +45,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -125,15 +123,6 @@
             this.comboBox2.Size = new System.Drawing.Size(220, 33);
             this.comboBox2.TabIndex = 6;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(417, 147);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(124, 25);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "End Semester:";
-            // 
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
@@ -181,6 +170,7 @@
             this.button2.TabIndex = 12;
             this.button2.Text = "Reset";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label7
             // 
@@ -224,17 +214,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(39, 147);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(130, 25);
+            this.label10.Size = new System.Drawing.Size(89, 25);
             this.label10.TabIndex = 17;
-            this.label10.Text = "Start Semester:";
-            // 
-            // comboBox6
-            // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(547, 144);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(215, 33);
-            this.comboBox6.TabIndex = 18;
+            this.label10.Text = "Semester:";
             // 
             // comboBox7
             // 
@@ -355,7 +337,6 @@
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.comboBox7);
-            this.Controls.Add(this.comboBox6);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.comboBox5);
             this.Controls.Add(this.label9);
@@ -366,7 +347,6 @@
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -400,7 +380,6 @@
         private Label label3;
         private Label label4;
         private ComboBox comboBox2;
-        private Label label5;
         private ComboBox comboBox3;
         private Label label6;
         private ComboBox comboBox4;
@@ -411,7 +390,6 @@
         private Label label9;
         private ComboBox comboBox5;
         private Label label10;
-        private ComboBox comboBox6;
         private ComboBox comboBox7;
         private Label label11;
         private Label label12;
