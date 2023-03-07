@@ -184,9 +184,10 @@ namespace CollegeRegistrationApp
             String credits = comboBox12.Text;
             
 
+
             if ( instrucDept != null || gender != null || instrucTitle != null ||
                 courseDept != null || courseTitle != null || credits != null || 
-                semester != null || StartYear != null || StartYear != null)
+                semester != null || StartYear != null || EndYear != null)
             {
                 mainQuery = "select sum (no_course) as Total_Courses from dbo.FactTable ";
                 SqlDataReader? mainQ = connection.GetDataReader(mainQuery);
@@ -196,7 +197,7 @@ namespace CollegeRegistrationApp
                     dataGridView1.DataSource = new BindingSource(mainQ, "");
                     mainQ.Close();
                 }
-
+                
 
             }
             else
@@ -247,15 +248,30 @@ namespace CollegeRegistrationApp
 
                 if (checkI == true)
                 {
-
+                    mainQuery += $" where I.IID = F.IID";
+                    check2 = true;
                 }
                 if (checkC == true)
                 {
-
+                    if (check2 == true)
+                    {
+                        mainQuery += $" and C.CID = F.CID";
+                    } else
+                    {
+                        mainQuery += $" where C.CID = F.CID";
+                        check2 = true;
+                    }
                 }
-                if (checkD = true)
+                if (checkD == true)
                 {
-
+                    if (check2 == true)
+                    {
+                        mainQuery += $" and D.dataKey = F.dataKey";
+                    } else
+                    {
+                        mainQuery += $" where D.dataKey = F.dataKey";
+                        check2 = true;
+                    }
                 }
 
                 if (instrucDept != null)
@@ -294,9 +310,18 @@ namespace CollegeRegistrationApp
                 {
                     mainQuery += $" and C.No_credits = '%{credits}%'";
                 }
+                MessageBox.Show(mainQuery);
+
+                SqlDataReader? mainQ = connection.GetDataReader(mainQuery);
+
+                if (mainQ != null && mainQ.HasRows)
+                {
+                    dataGridView1.DataSource = new BindingSource(mainQ, "");
+                    mainQ.Close();
+                }
+
             }
 
-            MessageBox.Show(mainQuery);
         }
 
         private void button2_Click(object sender, EventArgs e)
