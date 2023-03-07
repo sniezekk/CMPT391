@@ -72,7 +72,6 @@ namespace CollegeRegistrationApp
 
             if (InsTitleData != null && InsTitleData.HasRows)
             {
-                comboBox10.Items.Add("All");
                 while (InsTitleData.Read())
                 {
                     comboBox10.Items.Add(InsTitleData["Title"].ToString());
