@@ -185,15 +185,16 @@ namespace CollegeRegistrationApp
             
 
 
-            if ( instrucDept != null || gender != null || instrucTitle != null ||
-                courseDept != null || courseTitle != null || credits != null || 
-                semester != null || StartYear != null || EndYear != null)
+            if ( instrucDept.Length == 0 && gender.Length == 0 && instrucTitle.Length == 0 &&
+                courseDept.Length == 0 && courseTitle.Length == 0 && credits.Length == 0 && 
+                semester.Length == 0 && StartYear.Length == 0 && EndYear.Length == 0)
             {
                 mainQuery = "select sum (no_course) as Total_Courses from dbo.FactTable ";
                 SqlDataReader? mainQ = connection.GetDataReader(mainQuery);
 
                 if (mainQ != null && mainQ.HasRows)
                 {
+                    dataGridView1.DataSource = null;
                     dataGridView1.DataSource = new BindingSource(mainQ, "");
                     mainQ.Close();
                 }
@@ -202,26 +203,26 @@ namespace CollegeRegistrationApp
             }
             else
             {
-                mainQuery = $"select sum (no_course) as Total_Courses from dbo.FactTable";
+                mainQuery = $"select sum (no_course) as Total_Courses from dbo.FactTable F";
 
                 Boolean checkI = false;
                 Boolean checkC = false;
                 Boolean checkD = false;
                 Boolean check = false;
 
-                if (instrucDept != null || gender != null || instrucTitle != null)
+                if (instrucDept.Length != 0 || gender.Length != 0 || instrucTitle.Length != 0)
                 {
 
-                    mainQuery += $"dbo.WHinstructor I";
+                    mainQuery += $", dbo.WHinstructor I";
                     checkI = true;
 
                 }
 
-                if (courseDept != null || courseTitle != null || credits != null)
+                if (courseDept.Length != 0 || courseTitle.Length != 0 || credits.Length != 0)
                 {
                     if (check == false)
                     {
-                        mainQuery += $"dbo.WHcourses C";
+                        mainQuery += $", dbo.WHcourses C";
                         checkC = true;
                     }
                     else
@@ -231,11 +232,11 @@ namespace CollegeRegistrationApp
 
                 }
 
-                if (semester != null || StartYear != null || EndYear != null)
+                if (semester.Length != 0 || StartYear.Length != 0 || EndYear.Length != 0)
                 {
                     if (check == false)
                     {
-                        mainQuery += $"dbo.WHdate D";
+                        mainQuery += $", dbo.WHdate D";
                         checkD = true;
                     }
                     else
@@ -266,56 +267,59 @@ namespace CollegeRegistrationApp
                 {
                     if (check2 == true)
                     {
-                        mainQuery += $" and D.dataKey = F.dataKey";
+                        mainQuery += $" and D.dateKey = F.dateKey";
                     } else
                     {
-                        mainQuery += $" where D.dataKey = F.dataKey";
+                        mainQuery += $" where D.dateKey = F.dateKey";
                         check2 = true;
                     }
                 }
 
-                if (instrucDept != null)
+                if (instrucDept.Length != 0)
                 {
-                    mainQuery += $" and I.Dept = '%{instrucDept}%'";
+                    mainQuery += $" and I.Dept = '{instrucDept}'";
                 }
-                if (gender != null)
+                if (gender.Length != 0)
                 {
-                    mainQuery += $" and I.Gender = '%{gender}%'";
+                    mainQuery += $" and I.Gender = '{gender}'";
                 }
-                if (instrucTitle != null)
+                if (instrucTitle.Length != 0)
                 {
-                    mainQuery += $" and I.Title = '%{instrucTitle}%'";
+                    mainQuery += $" and I.Title = '{instrucTitle}'";
                 }
-                if (semester != null)
+                if (semester.Length != 0)
                 {
-                    mainQuery += $" and D.term = '%{semester}%'";
+                    mainQuery += $" and D.term = '{semester}'";
                 }
-                if (StartYear != null)
+                if (StartYear.Length != 0)
                 {
-                    mainQuery += $" and D.d_Year >= '%{StartYear}%'";
+                    mainQuery += $" and D.d_Year >= {StartYear}";
                 }
-                if (EndYear != null)
+                if (EndYear.Length != 0)
                 {
-                    mainQuery += $" and D.d_Year <= '%{EndYear}%'";
+                    mainQuery += $" and D.d_Year <= {EndYear}";
                 }
-                if (courseDept != null)
+                if (courseDept.Length != 0)
                 {
-                    mainQuery += $" and C.Dept = '%{courseDept}%'";
+                    mainQuery += $" and C.Dept = '{courseDept}'";
                 }
-                if (courseTitle != null)
+                if (courseTitle.Length != 0)
                 {
-                    mainQuery += $" and C.Title = '%{courseTitle}%'";
+                    mainQuery += $" and C.Title = '{courseTitle}'";
                 }
-                if (credits != null)
+                if (credits.Length != 0)
                 {
-                    mainQuery += $" and C.No_credits = '%{credits}%'";
+                    mainQuery += $" and C.No_credits = {credits}";
                 }
+
+                
                 MessageBox.Show(mainQuery);
 
                 SqlDataReader? mainQ = connection.GetDataReader(mainQuery);
 
                 if (mainQ != null && mainQ.HasRows)
                 {
+                    dataGridView1.DataSource = null;
                     dataGridView1.DataSource = new BindingSource(mainQ, "");
                     mainQ.Close();
                 }
@@ -332,6 +336,7 @@ namespace CollegeRegistrationApp
 
             if (mainQ != null && mainQ.HasRows)
             {
+                dataGridView1.DataSource = null;
                 dataGridView1.DataSource = new BindingSource(mainQ, "");
                 mainQ.Close();
             }
