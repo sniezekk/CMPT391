@@ -36,7 +36,7 @@ namespace CollegeRegistrationApp
 
             if (accountTextInput.Text.StartsWith("E"))
             {
-                new AdminMainForm().ShowDialog();
+                new AdminMainForm(connection).ShowDialog();
             }else if (accountTextInput.Text =="")
             {
                 MessageBox.Show("Enter valid id");
