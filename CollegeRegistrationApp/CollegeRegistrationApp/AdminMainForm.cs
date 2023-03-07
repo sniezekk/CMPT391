@@ -26,30 +26,12 @@ namespace CollegeRegistrationApp
             LoadInstructorTitleBox();
             LoadStartEndYearBox();
             LoadStartEndSemesterBox();
-            LoadInstructorBox();
             LoadDeptBox();
-            LoadCourseNameBox();
             LoadCourTitleBox();
             LoadCourseCreditBox();
 
         }
-        
-        private void LoadInstructorBox()
-        {
-            string query1 = $"select trim(First_Name) + ' ' + trim(Last_Name) as FullName from dbo.WHinstructor order by FullName asc";
-            SqlDataReader? instructorData = connection.GetDataReader(query1);
-
-            if (instructorData != null && instructorData.HasRows)
-            {
-                while (instructorData.Read())
-                {
-                    comboBox1.Items.Add(instructorData["FullName"].ToString());
-                }
-
-                instructorData.Close();
-            }
-
-        }
+       
 
         private void LoadInstructorDeptBox()
         {
@@ -90,9 +72,10 @@ namespace CollegeRegistrationApp
 
             if (InsTitleData != null && InsTitleData.HasRows)
             {
+                comboBox10.Items.Add("All");
                 while (InsTitleData.Read())
                 {
-                   
+                    comboBox10.Items.Add(InsTitleData["Title"].ToString());
                 }
 
                 InsTitleData.Close();
@@ -135,22 +118,6 @@ namespace CollegeRegistrationApp
 
         }
 
-        private void LoadCourseNameBox()
-        {
-            string queryCouNam = $"select trim(Dept) + ' ' + trim(Title) as FullCourseName from dbo.WHcourses order by FullCourseName asc";
-            SqlDataReader? CourseDeptData = connection.GetDataReader(queryCouNam);
-
-            if (CourseDeptData != null && CourseDeptData.HasRows)
-            {
-                while (CourseDeptData.Read())
-                {
-                    comboBox2.Items.Add(CourseDeptData["FullCourseName"].ToString());
-                }
-
-                CourseDeptData.Close();
-            }
-
-        }
  
         private void LoadDeptBox()
         {
@@ -206,143 +173,135 @@ namespace CollegeRegistrationApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            mainQuery = $"select * from dbo.FactTable F, ";
-
-            String Instructor = comboBox1.Text;
             String instrucDept = comboBox5.Text;
             String gender = comboBox9.Text;
             String instrucTitle = comboBox10.Text;
             String semester = comboBox3.Text;
             String StartYear = comboBox4.Text;
             String EndYear = comboBox7.Text;
-            String course = comboBox2.Text;
             String courseDept = comboBox8.Text;
             String courseTitle = comboBox11.Text;
             String credits = comboBox12.Text;
+            
 
-            Boolean check = false;
-
-            if (Instructor != null || instrucDept != null || gender != null || instrucTitle != null)
+            if ( instrucDept != null || gender != null || instrucTitle != null ||
+                courseDept != null || courseTitle != null || credits != null || 
+                semester != null || StartYear != null || StartYear != null)
             {
+                mainQuery = "select sum (no_course) as Total_Courses from dbo.FactTable ";
+                SqlDataReader? mainQ = connection.GetDataReader(mainQuery);
 
-                mainQuery += $"dbo.WHinstructor I";
-                check = true;
-
-            }
-
-            if (course != null || courseDept != null || courseTitle != null || credits != null)
-            {
-                if (check == false)
+                if (mainQ != null && mainQ.HasRows)
                 {
-                    mainQuery += $"dbo.WHcourses C";
-                    check = true;
-                }
-                else
-                {
-                    mainQuery += $", dbo.WHcourses C";
+                    dataGridView1.DataSource = new BindingSource(mainQ, "");
+                    mainQ.Close();
                 }
 
-            }
 
-            if (semester != null || StartYear != null || StartYear != null)
+            }
+            else
             {
-                if (check == false)
+                mainQuery = $"select sum (no_course) as Total_Courses from dbo.FactTable";
+
+                Boolean checkI = false;
+                Boolean checkC = false;
+                Boolean checkD = false;
+                Boolean check = false;
+
+                if (instrucDept != null || gender != null || instrucTitle != null)
                 {
-                    mainQuery += $"dbo.WHdate D";
-                }
-                else
-                {
-                    mainQuery += $", dbo.WHdate D";
-                }
-            }
 
-            mainQuery += " where ";
-
-            /*if (Instructor != null)
-            {
-                //query += $"where t.genres like '%{selectedGenre}%'";
-                mainQuery += "F."
-            }
-            */
-            Boolean checkI = false;
-            //Boolean secCheck = false;
-            if (instrucDept != null)
-            {
-
-                mainQuery += $"F.IID = I.IID and I.Dept = '%{instrucDept}%'";
-                checkI = true;
-            }
-
-            if (gender != null)
-            {
-                if (checkI == false)
-                {
-                    mainQuery += $"F.IID = I.IID and I.Gender = '%{gender}%'";
+                    mainQuery += $"dbo.WHinstructor I";
                     checkI = true;
+
                 }
-                else
+
+                if (courseDept != null || courseTitle != null || credits != null)
+                {
+                    if (check == false)
+                    {
+                        mainQuery += $"dbo.WHcourses C";
+                        checkC = true;
+                    }
+                    else
+                    {
+                        mainQuery += $", dbo.WHcourses C";
+                    }
+
+                }
+
+                if (semester != null || StartYear != null || EndYear != null)
+                {
+                    if (check == false)
+                    {
+                        mainQuery += $"dbo.WHdate D";
+                        checkD = true;
+                    }
+                    else
+                    {
+                        mainQuery += $", dbo.WHdate D";
+                    }
+                }
+
+                Boolean check2 = false;
+
+                if (checkI == true)
+                {
+
+                }
+                if (checkC == true)
+                {
+
+                }
+                if (checkD = true)
+                {
+
+                }
+
+                if (instrucDept != null)
+                {
+                    mainQuery += $" and I.Dept = '%{instrucDept}%'";
+                }
+                if (gender != null)
                 {
                     mainQuery += $" and I.Gender = '%{gender}%'";
                 }
-
-            }
-
-            if (StartYear == null)
-            {
-                if (checkI == false)
+                if (instrucTitle != null)
                 {
-                    mainQuery += $"F.dateKey = C.dateKey and C.d_Year >= '%{StartYear}%'";
-                    checkI = true;
+                    mainQuery += $" and I.Title = '%{instrucTitle}%'";
                 }
-                else
+                if (semester != null)
                 {
-                    mainQuery += $" and C.d_Year >= '%{StartYear}%'";
+                    mainQuery += $" and D.term = '%{semester}%'";
                 }
-            }
-            Boolean checkC = false;
-            if (courseTitle != null)
-            {
-                if (checkC == false)
+                if (StartYear != null)
                 {
-                    mainQuery += $"F.CID = C.CID and and C.Title = '%{courseTitle}%'";
+                    mainQuery += $" and D.d_Year >= '%{StartYear}%'";
                 }
-                else
+                if (EndYear != null)
                 {
-                    mainQuery += $" C.Title = '%{courseTitle}%'";
-                    checkC = true;
+                    mainQuery += $" and D.d_Year <= '%{EndYear}%'";
                 }
-            }
-
-            if (courseDept != null)
-            {
-                if (checkC == false)
+                if (courseDept != null)
                 {
                     mainQuery += $" and C.Dept = '%{courseDept}%'";
                 }
-                else
+                if (courseTitle != null)
                 {
-                    mainQuery += $"F.CID = C.CID and C.Dept = '%{courseDept}%'";
-                    checkC = true;
+                    mainQuery += $" and C.Title = '%{courseTitle}%'";
                 }
-
+                if (credits != null)
+                {
+                    mainQuery += $" and C.No_credits = '%{credits}%'";
+                }
             }
 
-            if (credits != null)
-            {
-                if (checkC == false)
-                {
-                    mainQuery += $" and C.No_creadits= '%{credits}%'";
-                }
-                else
-                {
-                    mainQuery += $"F.CID = C.CID and C.No_creadits = '%{credits}%'";
-                    checkC = true;
-                }
+            MessageBox.Show(mainQuery);
+        }
 
-            }
-            //MessageBox.Show(mainQuery);
-
-            //String mQuery = $"select * from dbo.WHinstructor"; //test query
+        private void button2_Click(object sender, EventArgs e)
+        {
+            mainQuery = $"select sum (no_course) as Total_Courses from dbo.FactTable";
 
             SqlDataReader? mainQ = connection.GetDataReader(mainQuery);
 
@@ -353,9 +312,95 @@ namespace CollegeRegistrationApp
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void label5_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = null;
+
         }
     }
+    /*if (Instructor != null)
+   {
+       //query += $"where t.genres like '%{selectedGenre}%'";
+       mainQuery += "F."
+   }
+
+   Boolean checkI = false;
+   //Boolean secCheck = false;
+   if (instrucDept != null)
+   {
+
+       mainQuery += $"F.IID = I.IID and I.Dept = '%{instrucDept}%'";
+       checkI = true;
+   }
+
+   if (gender != null)
+   {
+       if (checkI == false)
+       {
+           mainQuery += $"F.IID = I.IID and I.Gender = '%{gender}%'";
+           checkI = true;
+       }
+       else
+       {
+           mainQuery += $" and I.Gender = '%{gender}%'";
+       }
+
+   }
+
+   if (StartYear == null)
+   {
+       if (checkI == false)
+       {
+           mainQuery += $"F.dateKey = C.dateKey and C.d_Year >= '%{StartYear}%'";
+           checkI = true;
+       }
+       else
+       {
+           mainQuery += $" and C.d_Year >= '%{StartYear}%'";
+       }
+   }
+   Boolean checkC = false;
+   if (courseTitle != null)
+   {
+       if (checkC == false)
+       {
+           mainQuery += $"F.CID = C.CID and and C.Title = '%{courseTitle}%'";
+       }
+       else
+       {
+           mainQuery += $" C.Title = '%{courseTitle}%'";
+           checkC = true;
+       }
+   }
+
+   if (courseDept != null)
+   {
+       if (checkC == false)
+       {
+           mainQuery += $" and C.Dept = '%{courseDept}%'";
+       }
+       else
+       {
+           mainQuery += $"F.CID = C.CID and C.Dept = '%{courseDept}%'";
+           checkC = true;
+       }
+
+   }
+
+   if (credits != null)
+   {
+       if (checkC == false)
+       {
+           mainQuery += $" and C.No_creadits= '%{credits}%'";
+       }
+       else
+       {
+           mainQuery += $"F.CID = C.CID and C.No_creadits = '%{credits}%'";
+           checkC = true;
+       }
+
+   }
+   */
+    //MessageBox.Show(mainQuery);
+
+    //String mQuery = $"select * from dbo.WHinstructor"; //test query
 }
