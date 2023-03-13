@@ -341,7 +341,12 @@ namespace CollegeRegistrationApp
             }
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void MakeXML(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ReadXML(object sender, EventArgs e)
         {
 
         }
