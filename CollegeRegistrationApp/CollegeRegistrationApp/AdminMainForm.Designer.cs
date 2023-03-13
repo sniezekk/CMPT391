@@ -51,6 +51,8 @@
             this.comboBox12 = new System.Windows.Forms.ComboBox();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -262,12 +264,36 @@
             this.label5.Text = "Start Year:";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button4.Location = new System.Drawing.Point(655, 269);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(235, 46);
+            this.button4.TabIndex = 34;
+            this.button4.Text = "Make XML";
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button3.Location = new System.Drawing.Point(913, 269);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(235, 46);
+            this.button3.TabIndex = 35;
+            this.button3.Text = "Read XML";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
             // AdminMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1397, 907);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.comboBox12);
@@ -333,5 +359,7 @@
         private ComboBox comboBox12;
         private ComboBox comboBox4;
         private Label label5;
+        private Button button4;
+        private Button button3;
     }
 }
