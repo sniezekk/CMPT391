@@ -51,8 +51,8 @@
             this.comboBox12 = new System.Windows.Forms.ComboBox();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.makeXML = new System.Windows.Forms.Button();
+            this.readXML = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -262,29 +262,30 @@
             this.label5.Size = new System.Drawing.Size(89, 25);
             this.label5.TabIndex = 32;
             this.label5.Text = "Start Year:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // button4
+            // makeXML
             // 
-            this.button4.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button4.Location = new System.Drawing.Point(655, 269);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(235, 46);
-            this.button4.TabIndex = 34;
-            this.button4.Text = "Make XML";
-            this.button4.UseVisualStyleBackColor = false;
+            this.makeXML.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.makeXML.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.makeXML.Location = new System.Drawing.Point(655, 269);
+            this.makeXML.Name = "makeXML";
+            this.makeXML.Size = new System.Drawing.Size(235, 46);
+            this.makeXML.TabIndex = 34;
+            this.makeXML.Text = "Make XML";
+            this.makeXML.UseVisualStyleBackColor = false;
+            this.makeXML.Click += new System.EventHandler(this.MakeXML);
             // 
-            // button3
+            // readXML
             // 
-            this.button3.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button3.Location = new System.Drawing.Point(913, 269);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(235, 46);
-            this.button3.TabIndex = 35;
-            this.button3.Text = "Read XML";
-            this.button3.UseVisualStyleBackColor = false;
+            this.readXML.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.readXML.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.readXML.Location = new System.Drawing.Point(913, 269);
+            this.readXML.Name = "readXML";
+            this.readXML.Size = new System.Drawing.Size(235, 46);
+            this.readXML.TabIndex = 35;
+            this.readXML.Text = "Read XML";
+            this.readXML.UseVisualStyleBackColor = false;
+            this.readXML.Click += new System.EventHandler(this.ReadXML);
             // 
             // AdminMainForm
             // 
@@ -292,8 +293,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1397, 907);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.readXML);
+            this.Controls.Add(this.makeXML);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.comboBox12);
@@ -359,7 +360,7 @@
         private ComboBox comboBox12;
         private ComboBox comboBox4;
         private Label label5;
-        private Button button4;
-        private Button button3;
+        private Button makeXML;
+        private Button readXML;
     }
 }
