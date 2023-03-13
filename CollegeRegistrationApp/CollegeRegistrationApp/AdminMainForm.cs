@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using CollegeRegistrationApp.SQL;
 using System.Collections;
+using System.Xml;
+using System.Security.Cryptography;
 
 namespace CollegeRegistrationApp
 {
@@ -349,6 +351,95 @@ namespace CollegeRegistrationApp
         private void ReadXML(object sender, EventArgs e)
         {
 
+            using (XmlReader reader = XmlReader.Create(@"C:\Users\ayesh\Documents\University\cmpt 391\project\UNINFO.xml"))
+            {
+                while (reader.Read())
+                {
+                    if (reader.IsStartElement())
+                    {
+                        //return only when you have START tag  
+                        switch (reader.Name.ToString())
+                        {
+                            case "First_Name":
+                                //MessageBox.Show("first name is : " + reader.ReadString());
+                                String firstName = reader.ReadString();
+                                break;
+                            case "Last_Name":
+                                //MessageBox.Show("last name : " + reader.ReadString());
+                                String lastName = reader.ReadString();
+                                break;
+                            case "ITitle":
+                                //MessageBox.Show("title : " + reader.ReadString());
+                                String InsTitle = reader.ReadString();
+                                break;
+                            case "IDept":
+                                //MessageBox.Show("instructor dept : " + reader.ReadString());
+                                String InsDept = reader.ReadString();
+                                break;
+                            case "Gender":
+                                //MessageBox.Show("gender is : " + reader.ReadString());
+                                String gender = reader.ReadString();
+                                break;
+                            case "Year":
+                                //MessageBox.Show("year is : " + reader.ReadString());
+                                String year = reader.ReadString();
+                                break;
+                            case "Term":
+                                //MessageBox.Show("term is : " + reader.ReadString());
+                                String term = reader.ReadString();
+                                break;
+                            case "CTitle":
+                                //MessageBox.Show("course title : " + reader.ReadString());
+                                String cTitle = reader.ReadString();
+                                break;
+                            case "CDept":
+                                //MessageBox.Show("course dept is: " + reader.ReadString());
+                                String cDept = reader.ReadString();
+                                break;
+                            case "Credits":
+                                //MessageBox.Show("credits are : " + reader.ReadString());
+                                String credits = reader.ReadString();
+                                break;
+
+                            
+                            String instQuery = $"select * from dbo.WHinstructor I where I.First_Name = {firstName} AND I.Last_Name = {lastName}";
+                            Boolean instrutorExists = false;
+
+                            SqlDataReader? instQ = connection.GetDataReader(instQuery);
+                                if (instQ != null && instQ.HasRows)
+                                {
+                                    while (instQ.Read())
+                                    {
+                                        if (firstName == instQ["First_Name"].ToString())
+                                        {
+                                            if (lastName == instQ["Last_Name"].ToString())
+                                            {
+                                                if (InsTitle == instQ["Title"].ToString())
+                                                {
+                                                    if (InsDept == instQ["Dept"].ToString())
+                                                    {
+                                                        if (gender == instQ["Gender"].ToString())
+                                                        {
+                                                            instrutorExists = true;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    instQ.Close();
+                                }
+
+                            if (instrutorExists == false)
+                                {
+                                    String addInstructor = $"insert into WHinstructor (First_Name, Last_Name, Title, Dept, Gender) values ({firstName},{lastName}, {InsTitle}, {InsDept}, {gender});";
+                                }
+
+                        }
+
+                    }
+                }
+            }
         }
     }
 }
