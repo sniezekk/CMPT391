@@ -12,6 +12,7 @@ using CollegeRegistrationApp.SQL;
 using System.Collections;
 using System.Xml;
 using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace CollegeRegistrationApp
 {
@@ -33,7 +34,7 @@ namespace CollegeRegistrationApp
             LoadCourseCreditBox();
 
         }
-       
+
 
         private void LoadInstructorDeptBox()
         {
@@ -62,7 +63,7 @@ namespace CollegeRegistrationApp
                     comboBox9.Items.Add(genderData["Gender"].ToString());
                 }
 
-            genderData.Close();
+                genderData.Close();
             }
 
         }
@@ -119,7 +120,7 @@ namespace CollegeRegistrationApp
 
         }
 
- 
+
         private void LoadDeptBox()
         {
             string querydeptname = $"select distinct Dept as Department from dbo.WHcourses";
@@ -183,11 +184,11 @@ namespace CollegeRegistrationApp
             String courseDept = comboBox8.Text;
             String courseTitle = comboBox11.Text;
             String credits = comboBox12.Text;
-            
 
 
-            if ( instrucDept.Length == 0 && gender.Length == 0 && instrucTitle.Length == 0 &&
-                courseDept.Length == 0 && courseTitle.Length == 0 && credits.Length == 0 && 
+
+            if (instrucDept.Length == 0 && gender.Length == 0 && instrucTitle.Length == 0 &&
+                courseDept.Length == 0 && courseTitle.Length == 0 && credits.Length == 0 &&
                 semester.Length == 0 && StartYear.Length == 0 && EndYear.Length == 0)
             {
                 mainQuery = "select sum (no_course) as Total_Courses from dbo.FactTable ";
@@ -199,7 +200,7 @@ namespace CollegeRegistrationApp
                     dataGridView1.DataSource = new BindingSource(mainQ, "");
                     mainQ.Close();
                 }
-                
+
 
             }
             else
@@ -258,7 +259,8 @@ namespace CollegeRegistrationApp
                     if (check2 == true)
                     {
                         mainQuery += $" and C.CID = F.CID";
-                    } else
+                    }
+                    else
                     {
                         mainQuery += $" where C.CID = F.CID";
                         check2 = true;
@@ -269,7 +271,8 @@ namespace CollegeRegistrationApp
                     if (check2 == true)
                     {
                         mainQuery += $" and D.dateKey = F.dateKey";
-                    } else
+                    }
+                    else
                     {
                         mainQuery += $" where D.dateKey = F.dateKey";
                         check2 = true;
@@ -313,7 +316,8 @@ namespace CollegeRegistrationApp
                     mainQuery += $" and C.No_credits = {credits}";
                 }
 
-                
+
+
                 MessageBox.Show(mainQuery);
 
                 SqlDataReader? mainQ = connection.GetDataReader(mainQuery);
@@ -351,157 +355,169 @@ namespace CollegeRegistrationApp
         private void ReadXML(object sender, EventArgs e)
         {
 
-            using (XmlReader reader = XmlReader.Create(@"C:\Users\ayesh\Documents\University\cmpt 391\project\UNINFO.xml"))
+            using (XmlReader reader = XmlReader.Create(@"D:\XMLcreator\XMLcreator\bin\Debug\net6.0\UNINFO.xml"))
             {
-                while (reader.Read())
+                string firstName = "", lastName = "", InsTitle = "", InsDept = "", gender = "", year = "", term = "", cTitle = "", cDept = "", credits = "";
+                while (reader.Read()) //new row from the xml
                 {
+                    
+                    //MessageBox.Show("while loop");
+                    Boolean firstStop = false;
+
                     if (reader.IsStartElement())
                     {
-                        //return only when you have START tag  
+
                         switch (reader.Name.ToString())
                         {
                             case "First_Name":
                                 //MessageBox.Show("first name is : " + reader.ReadString());
-                                String firstName = reader.ReadString();
+                                firstName = reader.ReadString();
                                 break;
                             case "Last_Name":
                                 //MessageBox.Show("last name : " + reader.ReadString());
-                                String lastName = reader.ReadString();
+                                lastName = reader.ReadString();
                                 break;
                             case "ITitle":
                                 //MessageBox.Show("title : " + reader.ReadString());
-                                String InsTitle = reader.ReadString();
+                                InsTitle = reader.ReadString();
                                 break;
                             case "IDept":
                                 //MessageBox.Show("instructor dept : " + reader.ReadString());
-                                String InsDept = reader.ReadString();
+                                InsDept = reader.ReadString();
                                 break;
                             case "Gender":
                                 //MessageBox.Show("gender is : " + reader.ReadString());
-                                String gender = reader.ReadString();
+                                gender = reader.ReadString();
                                 break;
                             case "Year":
                                 //MessageBox.Show("year is : " + reader.ReadString());
-                                String year = reader.ReadString();
+                                year = reader.ReadString();
                                 break;
                             case "Term":
                                 //MessageBox.Show("term is : " + reader.ReadString());
-                                String term = reader.ReadString();
+                                term = reader.ReadString();
                                 break;
                             case "CTitle":
                                 //MessageBox.Show("course title : " + reader.ReadString());
-                                String cTitle = reader.ReadString();
+                                cTitle = reader.ReadString();
                                 break;
                             case "CDept":
                                 //MessageBox.Show("course dept is: " + reader.ReadString());
-                                String cDept = reader.ReadString();
+                                cDept = reader.ReadString();
                                 break;
                             case "Credits":
                                 //MessageBox.Show("credits are : " + reader.ReadString());
-                                String credits = reader.ReadString();
+                                credits = reader.ReadString();
+                                firstStop = true;
                                 break;
+                        }
 
+                    }
+                    if (firstStop)
+                    {
+                        String instQuery = $"select * from WHinstructor I where I.First_Name = '{firstName}' AND I.Last_Name = '{lastName}' " +
+                                $"AND I.Title = '{InsTitle}' AND I.Dept = '{InsDept}' AND I.Gender = '{gender}'";
+                        Boolean instrutorExists = false;
+
+                        SqlDataReader? instQ = connection.GetDataReader(instQuery);
+                        if (instQ != null && instQ.HasRows)
+                        {
+                            instrutorExists = true;
+                            instQ.Close();
+                        }
+                        else
+                        {
+                            //instQ.Close();
+                            String addInstructor = $"insert into WHinstructor (First_Name, Last_Name, Title, Dept, Gender) values ('{firstName}','{lastName}', '{InsTitle}', '{InsDept}', '{gender}')";
+                            SqlDataReader? addInst = connection.GetDataReader(addInstructor);
+                            if(addInst != null)
+                            {
+                                addInst.Close();
+                                instrutorExists = true;
+                            }
                             
-                            String instQuery = $"select * from dbo.WHinstructor I where I.First_Name = '{firstName}' AND I.Last_Name = '{lastName}' " +
-                                    $"AND I.Title = '{InsTitle}' AND I.Dept = '{InsDept}' AND I.Gender = '{gender}'";
-                            Boolean instrutorExists = false;
+                        }
 
-                            SqlDataReader? instQ = connection.GetDataReader(instQuery);
-                                if (instQ != null && instQ.HasRows)
-                                {
-                                    instrutorExists = true;           
-                                    instQ.Close();
-                                }
-                                else
-                                {
-                                    instQ.Close();
-                                    String addInstructor = $"insert into WHinstructor (First_Name, Last_Name, Title, Dept, Gender) values ('{firstName}','{lastName}', '{InsTitle}', '{InsDept}', '{gender}')";
-                                    SqlDataReader? addInst = connection.GetDataReader(addInstructor);
-                                    addInst.Close();
-                                    instrutorExists = true;
-                                }
+                        String dateQuery = $"select * from dbo.WHdate D where D.d_Year = {year} AND D.term = {term}";
+                        Boolean dateExists = false;
 
-                            String dateQuery = $"select * from dbo.WHdate D where D.d_Year = {year} AND D.term = {term}";
-                            Boolean dateExists = false;
+                        SqlDataReader? dateQ = connection.GetDataReader(dateQuery);
+                        if (dateQ != null && dateQ.HasRows)
+                        {
+                            dateExists = true;
+                            dateQ.Close();
+                        }
+                        else
+                        {
+                            String addDate = $"insert into WHdate (d_Year, term) values ({year}, {term})";
+                            SqlDataReader? addDateKey = connection.GetDataReader(addDate);
+                            dateExists = true;
+                        }
 
-                            SqlDataReader? dateQ = connection.GetDataReader(dateQuery);
-                                if (dateQ != null && dateQ.HasRows)
-                                {
-                                    dateExists= true;
-                                    dateQ.Close();
-                                }
-                                else
-                                {
-                                    dateQ.Close();
-                                    String addDate = $"insert into WHdate (d_Year, term) values ({year}, {term})";
-                                    SqlDataReader? addDateKey = connection.GetDataReader(addDate);
-                                    addDateKey.Close();
-                                    dateExists= true;
-                                }
+                        String courseQuery = $"select * from WHcourses C where C.Title = {cTitle} AND C.Dept = '{cDept}' AND C.No_credits ={credits}";
+                        Boolean courseExists = false;
 
-                            String courseQuery = $"select * from dbo.WHcourses C where C.Title = {cTitle} AND C.Dept = '{cDept}' AND C.No_credits ={credits}";
-                            Boolean courseExists = false;
+                        SqlDataReader? courseQ = connection.GetDataReader(courseQuery);
+                        if (courseQ != null && courseQ.HasRows)
+                        {
+                            courseExists = true;
+                            courseQ.Close();
+                        }
+                        else
+                        {
+                            String addCourse = $"insert into WHcourses (Title, Dept, No_credits) values ({cTitle}, '{cDept}', {credits})";
+                            SqlDataReader? addACourse = connection.GetDataReader(addCourse);
+                            courseExists = true;
+                        }
 
-                            SqlDataReader? courseQ = connection.GetDataReader(courseQuery);
-                            if (courseQ != null && courseQ.HasRows)
+                        if (instrutorExists == true && dateExists == true && courseExists == true)
+                        {
+                            
+                            String instQuery2 = $"select I.IID from WHinstructor I where I.First_Name = '{firstName}' AND I.Last_Name = '{lastName}' " +
+                                        $"AND I.Title = '{InsTitle}' AND I.Dept = '{InsDept}' AND I.Gender = '{gender}'";
+
+                            String dateQuery2 = $"select D.dateKey from WHdate D where D.d_Year = {year} AND D.term = {term}";
+
+                            String courseQuery2 = $"select C.CID from WHcourses C where C.Title = {cTitle} AND C.Dept = '{cDept}' AND C.No_credits ={credits}";
+
+                            String IID = "";
+                            String CID = "";
+                            String dateKey = "";
+                            SqlDataReader? getIID = connection.GetDataReader(instQuery2);
+                            if (getIID != null && getIID.HasRows)
                             {
-                                courseExists = true;
-                                courseQ.Close();
+                                IID = getIID["IID"].ToString();
+                                getIID.Close();
                             }
-                            else
+
+                            SqlDataReader? getCID = connection.GetDataReader(courseQuery2);
+                            if (getCID != null && getCID.HasRows)
                             {
-                                courseQ.Close();
-                                String addCourse = $"insert into WHcourses (Title, Dept, No_credits) values ({cTitle}, '{cDept}', {credits})";
-                                SqlDataReader? addACourse = connection.GetDataReader(addCourse);
-                                addACourse.Close();
-                                courseExists = true;
+                                CID = getCID["CID"].ToString();
+                                getCID.Close();
                             }
 
-                            if (instrutorExists == true && dateExists == true && courseExists == true) {
-                                String instQuery2 = $"select I.IID from dbo.WHinstructor I where I.First_Name = '{firstName}' AND I.Last_Name = '{lastName}' " +
-                                            $"AND I.Title = '{InsTitle}' AND I.Dept = '{InsDept}' AND I.Gender = '{gender}'";
+                            SqlDataReader? getDateKey = connection.GetDataReader(dateQuery2);
+                            if (getDateKey != null && getDateKey.HasRows)
+                            {
+                                dateKey = getDateKey["dateKey"].ToString();
+                                getDateKey.Close();
+                            }
 
-                                String dateQuery2 = $"select D.dateKey from dbo.WHdate D where D.d_Year = {year} AND D.term = {term}";
-
-                                String courseQuery2 = $"select C.CID from dbo.WHcourses C where C.Title = {cTitle} AND C.Dept = '{cDept}' AND C.No_credits ={credits}";
-
-                                    String IID;
-                                    String CID;
-                                    String dateKey;
-                                SqlDataReader? getIID = connection.GetDataReader(instQuery2);
-                                    if (getIID != null && getIID.HasRows)
-                                    {
-                                        IID = getIID["IID"].ToString();
-                                        getIID.Close();
-                                    }
-
-                                SqlDataReader? getCID = connection.GetDataReader(courseQuery2);
-                                    if (getCID != null && getCID.HasRows)
-                                    {
-                                        CID = getCID["CID"].ToString();
-                                        getCID.Close();
-                                    }
-
-                                SqlDataReader? getDateKey = connection.GetDataReader(dateQuery2);
-                                    if (getDateKey != null && getDateKey.HasRows)
-                                    {
-                                        dateKey = getDateKey["dateKey"].ToString();
-                                        getDateKey.Close();
-                                    }
-
-                                String insertFact = $"insert into FactTable(IID, CID, dateKey, no_course) values({IID}, {CID}, {dateKey}, 1)";
-                                SqlDataReader? addAFact = connection.GetDataReader(insertFact);
-                                    addAFact.Close();
-                                }
-                            else {
-                                    MessageBox.Show("The Instructor/Course/Date not added");
-                                }
-                                
+                            String insertFact = $"insert into FactTable(IID, CID, dateKey, no_course) values({IID}, {CID}, {dateKey}, 1)";
+                            SqlDataReader? addAFact = connection.GetDataReader(insertFact);
+                            //addAFact.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("The Instructor/Course/Date not added");
                         }
 
                     }
                 }
+
             }
         }
     }
 }
+
