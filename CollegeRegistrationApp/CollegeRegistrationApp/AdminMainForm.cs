@@ -427,15 +427,11 @@ namespace CollegeRegistrationApp
                         }
                         else
                         {
-                            //instQ.Close();
-                            String addInstructor = $"insert into WHinstructor (First_Name, Last_Name, Title, Dept, Gender) values ('{firstName}','{lastName}', '{InsTitle}', '{InsDept}', '{gender}')";
-                            SqlDataReader? addInst = connection.GetDataReader(addInstructor);
-                            if(addInst != null)
-                            {
-                                addInst.Close();
-                                instrutorExists = true;
-                            }
-                            
+                          
+                            string addInstructor = $"insert into dbo.WHinstructor (First_Name, Last_Name, Title, Dept, Gender) values('{firstName}','{lastName}', '{InsTitle}', '{InsDept}', '{gender}')";
+                            int result = connection.ExecuteMutation(addInstructor);
+                            if (result == 0) { MessageBox.Show("failed"); } else { instrutorExists = true; }
+
                         }
 
                         String dateQuery = $"select * from dbo.WHdate D where D.d_Year = {year} AND D.term = {term}";
@@ -449,12 +445,13 @@ namespace CollegeRegistrationApp
                         }
                         else
                         {
-                            String addDate = $"insert into WHdate (d_Year, term) values ({year}, {term})";
-                            SqlDataReader? addDateKey = connection.GetDataReader(addDate);
-                            dateExists = true;
+                            String addDate = $"insert into dbo.WHdate (d_Year, term) values ({year}, {term})";
+                            int result = connection.ExecuteMutation(addDate);
+                            if (result == 0) { MessageBox.Show("failed"); } else { dateExists = true; }
+                           
                         }
 
-                        String courseQuery = $"select * from WHcourses C where C.Title = {cTitle} AND C.Dept = '{cDept}' AND C.No_credits ={credits}";
+                        String courseQuery = $"select * from dbo.WHcourses C where C.Title = {cTitle} AND C.Dept = '{cDept}' AND C.No_credits ={credits}";
                         Boolean courseExists = false;
 
                         SqlDataReader? courseQ = connection.GetDataReader(courseQuery);
@@ -466,8 +463,8 @@ namespace CollegeRegistrationApp
                         else
                         {
                             String addCourse = $"insert into WHcourses (Title, Dept, No_credits) values ({cTitle}, '{cDept}', {credits})";
-                            SqlDataReader? addACourse = connection.GetDataReader(addCourse);
-                            courseExists = true;
+                            int result = connection.ExecuteMutation(addCourse);
+                            if (result == 0) { MessageBox.Show("failed"); } else { courseExists = true; }
                         }
 
                         if (instrutorExists == true && dateExists == true && courseExists == true)
@@ -478,7 +475,7 @@ namespace CollegeRegistrationApp
 
                             String dateQuery2 = $"select D.dateKey from WHdate D where D.d_Year = {year} AND D.term = {term}";
 
-                            String courseQuery2 = $"select C.CID from WHcourses C where C.Title = {cTitle} AND C.Dept = '{cDept}' AND C.No_credits ={credits}";
+                            String courseQuery2 = $"select C.CID from WHcourses C where C.Title = {cTitle} AND C.Dept = '{cDept}' AND C.No_credits = {credits}";
 
                             String IID = "";
                             String CID = "";
@@ -488,6 +485,7 @@ namespace CollegeRegistrationApp
                             {
                                 IID = getIID["IID"].ToString();
                                 getIID.Close();
+                                MessageBox.Show("IID runs");
                             }
 
                             SqlDataReader? getCID = connection.GetDataReader(courseQuery2);
@@ -495,6 +493,7 @@ namespace CollegeRegistrationApp
                             {
                                 CID = getCID["CID"].ToString();
                                 getCID.Close();
+                                MessageBox.Show("CID runs");
                             }
 
                             SqlDataReader? getDateKey = connection.GetDataReader(dateQuery2);
@@ -502,11 +501,12 @@ namespace CollegeRegistrationApp
                             {
                                 dateKey = getDateKey["dateKey"].ToString();
                                 getDateKey.Close();
+                                MessageBox.Show("dataKey runs");
                             }
 
                             String insertFact = $"insert into FactTable(IID, CID, dateKey, no_course) values({IID}, {CID}, {dateKey}, 1)";
-                            SqlDataReader? addAFact = connection.GetDataReader(insertFact);
-                            //addAFact.Close();
+                            int result = connection.ExecuteMutation(insertFact);
+                            if (result != 0) { MessageBox.Show("insert in to fact table failed"); }
                         }
                         else
                         {
