@@ -532,6 +532,7 @@ namespace CollegeRegistrationApp
                 }
 
             }
+            MessageBox.Show("Finished adding XML data to warehouse! new rows and facts created");
         }
     }
 }
