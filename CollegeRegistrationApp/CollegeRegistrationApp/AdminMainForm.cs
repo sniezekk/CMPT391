@@ -512,6 +512,9 @@ namespace CollegeRegistrationApp
                                 dateKey = getDateKey["dateKey"].ToString();
                                 getDateKey.Close();
                                 MessageBox.Show("dataKey runs");
+                            } else if (getDateKey != null)
+                            {
+                                getDateKey.Close();
                             }
 
                             String insertFact = $"insert into FactTable(IID, CID, dateKey, no_course) values({IID}, {CID}, {dateKey}, 1)";
