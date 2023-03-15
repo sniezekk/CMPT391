@@ -521,7 +521,7 @@ namespace CollegeRegistrationApp
 
                             String insertFact = $"insert into FactTable(IID, CID, dateKey, no_course) values({IID}, {CID}, {dateKey}, 1)";
                             int result = connection.ExecuteMutation(insertFact);
-                            if (result == 0) { MessageBox.Show("insert in to fact table failed"); } else { ; }
+                            if (result == 0) { MessageBox.Show("insert in to fact table failed"); }
                         }
                         else
                         {
