@@ -419,6 +419,7 @@ namespace CollegeRegistrationApp
                                 $"AND I.Title = '{InsTitle}' AND I.Dept = '{InsDept}' AND I.Gender = '{gender}'";
                         Boolean instrutorExists = false;
 
+                        //FIXED CLOSE HERE
                         SqlDataReader? instQ = connection.GetDataReader(instQuery);
                         if (instQ != null && instQ.HasRows)
                         {
@@ -427,7 +428,7 @@ namespace CollegeRegistrationApp
                         }
                         else
                         {
-                          
+                            if (instQ != null) { instQ.Close(); }
                             string addInstructor = $"insert into dbo.WHinstructor (First_Name, Last_Name, Title, Dept, Gender) values('{firstName}','{lastName}', '{InsTitle}', '{InsDept}', '{gender}')";
                             int result = connection.ExecuteMutation(addInstructor);
                             if (result == 0) { MessageBox.Show("failed"); } else { instrutorExists = true; }
@@ -445,6 +446,7 @@ namespace CollegeRegistrationApp
                         }
                         else
                         {
+                            if (dateQ != null) { dateQ.Close(); }
                             String addDate = $"insert into dbo.WHdate (d_Year, term) values ({year}, {term})";
                             int result = connection.ExecuteMutation(addDate);
                             if (result == 0) { MessageBox.Show("failed"); } else { dateExists = true; }
@@ -462,7 +464,8 @@ namespace CollegeRegistrationApp
                         }
                         else
                         {
-                            String addCourse = $"insert into WHcourses (Title, Dept, No_credits) values ("{cTitle}, '{cDept}', {credits})";
+                            if (courseQ != null) { courseQ.Close(); }
+                            String addCourse = $"insert into WHcourses (Title, Dept, No_credits) values ({cTitle}, '{cDept}', {credits})";
                             int result = connection.ExecuteMutation(addCourse);
                             if (result == 0) { MessageBox.Show("failed"); } else { courseExists = true; }
                         }
@@ -486,14 +489,21 @@ namespace CollegeRegistrationApp
                                 IID = getIID["IID"].ToString();
                                 getIID.Close();
                                 MessageBox.Show("IID runs");
+                          
+                            } else if (getIID != null)
+                            {
+                                getIID.Close();
                             }
-
+                            
                             SqlDataReader? getCID = connection.GetDataReader(courseQuery2);
                             if (getCID != null && getCID.HasRows)
                             {
                                 CID = getCID["CID"].ToString();
                                 getCID.Close();
                                 MessageBox.Show("CID runs");
+                            } else if (getCID != null)
+                            {
+                                getCID.Close();
                             }
 
                             SqlDataReader? getDateKey = connection.GetDataReader(dateQuery2);
