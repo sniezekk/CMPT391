@@ -489,7 +489,6 @@ namespace CollegeRegistrationApp
                                 getIID.Read();
                                 IID = getIID["IID"].ToString();
                                 getIID.Close();
-                                MessageBox.Show("IID runs");
                           
                             } else if (getIID != null)
                             {
@@ -502,7 +501,7 @@ namespace CollegeRegistrationApp
                                 getCID.Read();
                                 CID = getCID["CID"].ToString();
                                 getCID.Close();
-                                MessageBox.Show("CID runs");
+                                
                             } else if (getCID != null)
                             {
                                 getCID.Close();
@@ -514,7 +513,7 @@ namespace CollegeRegistrationApp
                                 getDateKey.Read();
                                 dateKey = getDateKey["dateKey"].ToString();
                                 getDateKey.Close();
-                                MessageBox.Show("dataKey runs");
+                                
                             } else if (getDateKey != null)
                             {
                                 getDateKey.Close();
@@ -522,7 +521,7 @@ namespace CollegeRegistrationApp
 
                             String insertFact = $"insert into FactTable(IID, CID, dateKey, no_course) values({IID}, {CID}, {dateKey}, 1)";
                             int result = connection.ExecuteMutation(insertFact);
-                            if (result != 0) { MessageBox.Show("insert in to fact table failed"); }
+                            if (result == 0) { MessageBox.Show("insert in to fact table failed"); } else { ; }
                         }
                         else
                         {
