@@ -462,7 +462,7 @@ namespace CollegeRegistrationApp
                         }
                         else
                         {
-                            String addCourse = $"insert into WHcourses (Title, Dept, No_credits) values ({cTitle}, '{cDept}', {credits})";
+                            String addCourse = $"insert into WHcourses (Title, Dept, No_credits) values ("{cTitle}, '{cDept}', {credits})";
                             int result = connection.ExecuteMutation(addCourse);
                             if (result == 0) { MessageBox.Show("failed"); } else { courseExists = true; }
                         }
