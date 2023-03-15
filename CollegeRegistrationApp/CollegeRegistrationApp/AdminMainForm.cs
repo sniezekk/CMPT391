@@ -486,6 +486,7 @@ namespace CollegeRegistrationApp
                             SqlDataReader? getIID = connection.GetDataReader(instQuery2);
                             if (getIID != null && getIID.HasRows)
                             {
+                                getIID.Read();
                                 IID = getIID["IID"].ToString();
                                 getIID.Close();
                                 MessageBox.Show("IID runs");
@@ -498,6 +499,7 @@ namespace CollegeRegistrationApp
                             SqlDataReader? getCID = connection.GetDataReader(courseQuery2);
                             if (getCID != null && getCID.HasRows)
                             {
+                                getCID.Read();
                                 CID = getCID["CID"].ToString();
                                 getCID.Close();
                                 MessageBox.Show("CID runs");
@@ -509,6 +511,7 @@ namespace CollegeRegistrationApp
                             SqlDataReader? getDateKey = connection.GetDataReader(dateQuery2);
                             if (getDateKey != null && getDateKey.HasRows)
                             {
+                                getDateKey.Read();
                                 dateKey = getDateKey["dateKey"].ToString();
                                 getDateKey.Close();
                                 MessageBox.Show("dataKey runs");
