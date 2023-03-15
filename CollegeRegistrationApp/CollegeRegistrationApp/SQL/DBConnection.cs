@@ -10,7 +10,7 @@ namespace CollegeRegistrationApp.SQL
 {
     public class DBConnection
     {
-        readonly String connectionString = "Server = localhost; Database = CollegeRegistration; Trusted_Connection = yes;";
+        readonly String connectionString = "Server = localhost; Database = CollegeRegistration; Trusted_Connection = yes; MultipleActiveResultSets=true;";
         SqlConnection connection;
 
         public DBConnection()
